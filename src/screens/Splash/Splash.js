@@ -3,49 +3,88 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import UserDropdown from "../../components/DropdownMenu";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownToggle from "react-bootstrap/DropdownToggle";
-import DropdownButton from "react-bootstrap/DropdownButton";
+// import Dropdown from "react-bootstrap/Dropdown";
+// import DropdownToggle from "react-bootstrap/DropdownToggle";
+// import DropdownButton from "react-bootstrap/DropdownButton";
 
 export default function Splash() {
   const [token, setToken] = useState();
   const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchType, setSearchType] = useState("artists");
 
-  //Make a call to API for user information
   useEffect(() => {
     if (localStorage.getItem("Access_Token")) {
-      // console.log("SUCCESS", localStorage.getItem("Access_Token"));
       setToken(localStorage.getItem("Access_Token"));
-      // console.log("We have the storage token", token);
+      if (token) {
+        axios
+          .get("https://api.spotify.com/v1/me", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((response) => {
+            console.log("Response:", response.data);
+            setData(response.data);
+            setIsLoading(false);
+          })
+          .catch((e) => {
+            console.log("THIS IS THE ERROR", e);
+          });
+      }
     }
   }, [token]);
 
-  useEffect(() => {
-    if (token) {
-      axios
-        .get("https://api.spotify.com/v1/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          // setData(response);
-          console.log("THIS IS THE DATA", response.data);
-        })
-        .catch((e) => {
-          console.log("THIS IS THE ERROR", e);
-        });
-    }
-  }, [token]);
+  const handleSearch = () => {
+    axios
+      .get(`https://api.spotify.com/v1/me/top/${searchType}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log("Top Response:", response.data);
+        // setData(response.data);
+        // setType(response.data.type);
+        // setIsLoading(false);
+      })
+      .catch((e) => {
+        console.log("THIS IS THE ERROR", e);
+      });
+  };
 
   return (
-    <div style={{ backgroundColor: "green", height: "100%" }}>
-      {/* <div>Splash Page</div> */}
-      <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </DropdownButton>
-    </div>
+    <>
+      <div>
+        {isLoading ? (
+          <h1>Loading...</h1>
+        ) : (
+          <>
+            <UserDropdown
+              email={data.email}
+              displayName={data.display_name}
+              signout={"Sign Out"}
+              //TODO sign out and redirect
+            />
+            <button
+              onClick={() => {
+                setSearchType("artists");
+                handleSearch();
+              }}
+            >
+              Your Top Artists
+            </button>
+            <button
+              onClick={() => {
+                setSearchType("tracks");
+                handleSearch();
+              }}
+            >
+              Your Top Tracks
+            </button>
+          </>
+        )}
+      </div>
+    </>
   );
 }
