@@ -11,6 +11,8 @@ import ModalConfirmation from "../../components/Modal";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 
 export default function Splash() {
   const [token, setToken] = useState();
@@ -84,20 +86,30 @@ export default function Splash() {
 
   return (
     <>
+      <Navbar bg="success" variant="dark">
+        <Container>
+          <Navbar.Brand href="#home">Spotify Data</Navbar.Brand>
+          <Nav.Link href="#features">Artists</Nav.Link>
+          <Nav.Link href="#pricing">Songs</Nav.Link>
+          <Navbar.Collapse className="justify-content-end">
+            <UserDropdown
+              email={data?.email}
+              displayName={data?.display_name}
+              signout={"Sign Out"}
+              //TODO sign out and redirect
+              onClick={() => {
+                localStorage.clear();
+                setToken();
+              }}
+            />
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+
       {isLoading ? (
         <h1>Loading...</h1>
       ) : (
         <>
-          <UserDropdown
-            email={data?.email}
-            displayName={data?.display_name}
-            signout={"Sign Out"}
-            //TODO sign out and redirect
-            onClick={() => {
-              localStorage.clear();
-              setToken();
-            }}
-          />
           <Row>
             <DisplayButton
               label={"Your Top Artists"}
