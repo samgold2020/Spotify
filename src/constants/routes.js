@@ -1,5 +1,4 @@
 export default {
-  Root: "/",
-  SignIn: "/signin",
+  Home: "/",
   Splash: "/splash",
 };
