@@ -98,20 +98,23 @@ export default function Splash() {
               setToken();
             }}
           />
-          <DisplayButton
-            label={"Your Top Artists"}
-            onClick={() => {
-              setSearchType("artists");
-              handleSearch();
-            }}
-          />
-          <DisplayButton
-            label={"Your Top Tracks"}
-            onClick={() => {
-              setSearchType("tracks");
-              handleSearch();
-            }}
-          />
+          <Row>
+            <DisplayButton
+              label={"Your Top Artists"}
+              onClick={() => {
+                setSearchType("artists");
+                handleSearch();
+              }}
+            />
+            <DisplayButton
+              label={"Your Top Tracks"}
+              onClick={() => {
+                setSearchType("tracks");
+                handleSearch();
+              }}
+              primary={false}
+            />
+          </Row>
         </>
       )}
 
