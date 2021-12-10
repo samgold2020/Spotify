@@ -1,4 +1,5 @@
 export const Colors = {
-  white: '#FFFFFF"',
+  white: "#FFFFFF",
+  black: "#000000",
   spotifyGreen: "#1EB954",
 };

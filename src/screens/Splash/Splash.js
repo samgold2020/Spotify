@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
 
 import axios from "axios";
-import { Link, Route } from "react-router-dom";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 
 import UserDropdown from "../../components/DropdownMenu";
 import DisplayButton from "../../components/Button";
 import ContentCard from "../../components/Card";
 import ModalConfirmation from "../../components/Modal";
-
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Nav from "react-bootstrap/Nav";
+import styles from "./styles";
+import { Colors } from "../../colors";
 
 export default function Splash() {
   const [token, setToken] = useState();
@@ -87,18 +85,27 @@ export default function Splash() {
 
   return (
     <>
-      <Navbar bg="dark" expand="lg">
+      <Navbar style={styles.navbar} expand="lg">
         <Container fluid>
-          <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Brand style={styles.navbarTitle} href="#">
+            Spotify Data
+          </Navbar.Brand>
+          <Navbar.Toggle
+            aria-controls="navbarScroll"
+            style={{ backgroundColor: "white" }}
+          />
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="me-auto my-2 my-lg-0"
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link href="#action1">Home</Nav.Link>
-              <Nav.Link href="#action2">Link</Nav.Link>
+              <Nav.Link style={styles.navbarLinks} href="#action1">
+                Top Artists
+              </Nav.Link>
+              <Nav.Link style={styles.navbarLinks} href="#action2">
+                Top Tracks
+              </Nav.Link>
             </Nav>
             <UserDropdown
               email={data?.email}
