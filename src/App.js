@@ -5,8 +5,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import { RouteNav } from "./constants";
 import Splash from "./screens/Splash/Splash";
-import SignIn from "./screens/Authentication/SignIn";
+import PrivateRoute from "./PrivateRoute";
 import Home from "./screens/Home/Home";
+import { AuthContext } from "./context/auth";
 
 function App() {
   const getAuthParams = (hash) => {
@@ -43,7 +44,16 @@ function App() {
     <div className="App">
       <Routes>
         <Route path={RouteNav.Home} element={<Home />} />
-        <Route path={RouteNav.Splash} element={<Splash />} />
+        {/* <Route path={RouteNav.Splash} element={<Splash />} /> */}
+
+        <Route
+          path={RouteNav.Splash}
+          element={
+            <PrivateRoute>
+              <Splash />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </div>
   );

@@ -7,13 +7,22 @@ const SCOPES = [`user-top-read, user-read-email`];
 const SPACE_DELIMITER = "$20";
 const SCOPE_SPACES_URL = SCOPES.join(SPACE_DELIMITER);
 export default function Home() {
+  console.log("ON THE HOME PAGE");
   const handleLogin = () => {
     window.location = `${SPOTIFY_AUTHORIZE_BASEURL}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPE_SPACES_URL}&response_type=token&show_dialogue=true`;
   };
 
   return (
-    <div>
-      <button onClick={handleLogin}>Login</button>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        marginTop: "90px",
+      }}
+    >
+      <button style={{ width: "50%" }} onClick={handleLogin}>
+        Login
+      </button>
     </div>
   );
 }
