@@ -4,10 +4,10 @@ import axios from "axios";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import { useHistory } from "react-router-dom";
-import Spinner from "react-bootstrap/Spinner";
 
 import { Colors } from "../../colors";
 import ContentCard from "../../components/Card";
+import SpinLoader from "../../components/SpinLoader/index";
 
 function TopArtists({ data }) {
   const [token, setToken] = useState();
@@ -55,21 +55,7 @@ function TopArtists({ data }) {
       <div style={{ backgroundColor: Colors.darkGrey, minHeight: "100vh" }}>
         <Container>
           {isLoading ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                paddingTop: "20px",
-              }}
-            >
-              <Spinner
-                animation="border"
-                size="lg"
-                style={{
-                  color: Colors.spotifyGreen,
-                }}
-              />
-            </div>
+            <SpinLoader />
           ) : (
             <Row className="justify-content-md-center">
               <div style={{ display: "flex", justifyContent: "center" }}>
