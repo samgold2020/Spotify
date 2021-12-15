@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-import axios from "axios";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -8,39 +7,15 @@ import Nav from "react-bootstrap/Nav";
 import styles from "./styles";
 import UserDropdown from "../DropdownMenu";
 
-function NavBar() {
-  const [token, setToken] = useState();
-  const [userData, setUserData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+function NavBar({ data }) {
+  console.log("DATA inside nav", data);
 
-  useEffect(() => {
-    console.log("Getting here");
-    if (localStorage.getItem("Access_Token")) {
-      setToken(localStorage.getItem("Access_Token"));
-      setIsLoading(false);
-      if (token) {
-        console.log("token", token);
-        axios
-          .get("https://api.spotify.com/v1/me", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((response) => {
-            setUserData(response?.data);
-            console.log(response);
-            setIsLoading(false);
-          })
-          .catch((e) => {
-            console.log("THIS IS THE ERROR", e);
-            //TODO: Clear local storage if there is no token
-            //localStorage.clear();
-          });
-      }
-    } else {
-      console.log("This will eventually be the logout");
-    }
-  }, []);
+  //TODO sign out and redirect
+  const signOut = () => {
+    // const url = "https://www.spotify.com/logout/";
+    // window.open(url, "Spotify Logout", "width=700,height=500,top=40,left=40");
+    // setTimeout(() => spotifyLogoutWindow.close(), 2000);
+  };
 
   return (
     <Navbar style={styles.navbar} expand="lg">
@@ -66,8 +41,8 @@ function NavBar() {
             </Nav.Link>
           </Nav>
           <UserDropdown
-            email={userData?.email}
-            displayName={userData?.display_name}
+            email={data?.email}
+            displayName={data?.display_name}
             signout={"Logout"}
             // onClick={signOut}
           />

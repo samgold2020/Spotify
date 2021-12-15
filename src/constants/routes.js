@@ -3,4 +3,5 @@ export default {
   Splash: "/splash",
   TopArtists: "/topartists",
   TopTracks: "/toptracks",
+  Artist: `/viewartist`,
 };
