@@ -49,29 +49,6 @@ function TopArtists({ data }) {
     console.log("res", artistData);
   };
 
-  // //TODO Get Artist /v1/artists/id
-  // const viewArtist = async () => {
-  //   console.log(typeof artistId);
-  //   try {
-  //     let res = await axios({
-  //       url: `https://api.spotify.com/v1/artists/${artistId}`,
-  //       method: "get",
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-  //     if (res.status === 200) {
-  //       console.log("SUCCESSFUL GET", res);
-  //       setTest(res);
-
-  //       //TODO reroute the user with the data to the new route
-  //       // setUserData(res?.data);
-  //     }
-  //   } catch (err) {
-  //     console.log("THIS IS THE ERROR");
-  //   }
-  // };
-
   return (
     <>
       <div style={{ backgroundColor: Colors.darkGrey, minHeight: "100vh" }}>
@@ -80,11 +57,16 @@ function TopArtists({ data }) {
             <h1> ...Loading, please hold</h1>
           ) : (
             <Row className="justify-content-md-center">
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <h1 style={{ color: Colors.spotifyGreen, paddingTop: "20px" }}>
+                  These are your top artists based on calculated affinity:
+                </h1>
+              </div>
               {artistData?.map((item, index) => (
                 <ContentCard
                   key={index}
                   title={item?.name}
-                  // body={"Something fun"}
+                  src={item.images[0].url}
                   footerText={"View Artist Details"}
                   onClick={() => {
                     history.push({
