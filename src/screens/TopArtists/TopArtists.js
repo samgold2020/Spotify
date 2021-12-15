@@ -10,10 +10,9 @@ import ContentCard from "../../components/Card";
 
 function TopArtists({ data }) {
   const [token, setToken] = useState();
-  const [artistData, setArtistData] = useState();
+  const [artistData, setArtistData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [artistId, setArtistId] = useState("");
-  const [test, setTest] = useState({});
 
   const history = useHistory();
   console.log("Artist data outside", artistData);
@@ -30,8 +29,9 @@ function TopArtists({ data }) {
 
   const getArtists = async (token) => {
     try {
+      //Add users top tracks
       let res = await axios({
-        url: `https://api.spotify.com/v1/me/top/artists`,
+        url: "https://api.spotify.com/v1/me/top/artists",
         method: "get",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -39,36 +39,38 @@ function TopArtists({ data }) {
       });
       if (res.status === 200) {
         setArtistData(res?.data.items);
+        console.log("Ari", artistData);
         setIsLoading(false);
       }
+      return artistData;
     } catch (err) {
-      console.log("THIS IS THE ERROR");
+      console.log("THIS IS The ERROR");
     }
+    console.log("res", artistData);
   };
 
-  //TODO Get Artist /v1/artists/id
-  const viewArtist = async () => {
-    console.log(typeof artistId);
-    try {
-      let res = await axios({
-        url: `https://api.spotify.com/v1/artists/${artistId}`,
-        method: "get",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.status === 200) {
-        console.log("SUCCESSFUL GET", res);
-        setTest(res);
+  // //TODO Get Artist /v1/artists/id
+  // const viewArtist = async () => {
+  //   console.log(typeof artistId);
+  //   try {
+  //     let res = await axios({
+  //       url: `https://api.spotify.com/v1/artists/${artistId}`,
+  //       method: "get",
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     if (res.status === 200) {
+  //       console.log("SUCCESSFUL GET", res);
+  //       setTest(res);
 
-        //TODO reroute the user with the data to the new route
-        // setUserData(res?.data);
-      }
-    } catch (err) {
-      console.log("THIS IS THE ERROR");
-    }
-    // history.push("/viewartist", [test]);
-  };
+  //       //TODO reroute the user with the data to the new route
+  //       // setUserData(res?.data);
+  //     }
+  //   } catch (err) {
+  //     console.log("THIS IS THE ERROR");
+  //   }
+  // };
 
   return (
     <>
@@ -82,10 +84,9 @@ function TopArtists({ data }) {
                 <ContentCard
                   key={index}
                   title={item?.name}
-                  body={"Something fun"}
-                  footerText={`Popularity on Spotify: ${item.popularity}`}
+                  // body={"Something fun"}
+                  footerText={"View Artist Details"}
                   onClick={() => {
-                    // setArtistId(item.id);
                     history.push({
                       pathname: "/viewartist",
                       state: { detail: item.id },
