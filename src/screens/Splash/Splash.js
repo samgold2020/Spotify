@@ -9,23 +9,25 @@ import Nav from "react-bootstrap/Nav";
 import UserDropdown from "../../components/DropdownMenu";
 import DisplayButton from "../../components/Button";
 import ContentCard from "../../components/Card";
-import ModalConfirmation from "../../components/Modal";
+// import ModalConfirmation from "../../components/Modal";
 import styles from "./styles";
 import { Colors } from "../../colors";
 
 export default function Splash() {
   const [token, setToken] = useState();
-  const [data, setData] = useState();
+  const [userData, setUserData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [searchType, setSearchType] = useState("artists");
-  const [topData, setTopData] = useState();
-  const [show, setShow] = useState(false);
+  // const [searchType, setSearchType] = useState("artists");
+  // const [topData, setTopData] = useState();
+  // const [show, setShow] = useState(false);
 
   useEffect(() => {
+    console.log("Getting here");
     if (localStorage.getItem("Access_Token")) {
       setToken(localStorage.getItem("Access_Token"));
       setIsLoading(false);
       if (token) {
+        console.log("token", token);
         axios
           .get("https://api.spotify.com/v1/me", {
             headers: {
@@ -33,59 +35,64 @@ export default function Splash() {
             },
           })
           .then((response) => {
-            setData(response?.data);
+            setUserData(response?.data);
+            console.log(response);
             setIsLoading(false);
           })
           .catch((e) => {
             console.log("THIS IS THE ERROR", e);
-            // localStorage.clear();
+            //TODO: Clear local storage if there is no token
+            //localStorage.clear();
           });
       }
     } else {
       console.log("This will eventually be the logout");
     }
-  }, [token]);
+  }, []);
 
-  const handleSearch = () => {
-    axios
-      .get(`https://api.spotify.com/v1/me/top/${searchType}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        console.log("Top Response:", response.data);
-        setTopData(response.data.items);
-        console.log("TOP DATA", topData);
-      })
-      .catch((e) => {
-        console.log("THIS IS THE ERROR", e);
-        setShow(true);
-      });
-  };
+  // const handleSearch = () => {
+  //   axios
+  //     .get(`https://api.spotify.com/v1/me/top/${searchType}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       // console.log("Top Response:", response.data);
+  //       setTopData(response.data.items);
+  //       console.log("Top Response:", topData);
+  //     })
+  //     .catch((e) => {
+  //       console.log("Error", e);
+  //       setShow(true);
+  //     });
+  // };
 
-  const signoutModal = () => {
-    return (
-      <>
-        <ModalConfirmation
-          title={"You are logged out"}
-          body={
-            "You have been logged out due to inactivity, please proceed to log back in."
-          }
-          buttonTitle={"Login"}
-          onClick={() => {
-            // <Link to="/login" />;
-            // console.log("CLICK");
-          }}
-          isOpen={show}
-        />
-      </>
-    );
+  //TODO Impliment the signout modal if user token expires
+  // const signoutModal = () => {
+  //   return (
+  //     <>
+  //       <ModalConfirmation
+  //         title={"You are logged out"}
+  //         body={
+  //           "You have been logged out due to inactivity, please proceed to log back in."
+  //         }
+  //         buttonTitle={"Login"}
+  //         onClick={() => console.log("Sign out modal")}
+  //         isOpen={show}
+  //       />
+  //     </>
+  //   );
+  // };
+
+  //TODO sign out and redirect
+  const signOut = () => {
+    console.log("Signout");
   };
 
   return (
     <>
-      <Navbar style={styles.navbar} expand="lg">
+      {/* <Navbar style={styles.navbar} expand="lg">
         <Container fluid>
           <Navbar.Brand style={styles.navbarTitle} href="#">
             Spotify Data
@@ -100,7 +107,7 @@ export default function Splash() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link style={styles.navbarLinks} href="#action1">
+              <Nav.Link style={styles.navbarLinks} href="/topartists">
                 Top Artists
               </Nav.Link>
               <Nav.Link style={styles.navbarLinks} href="#action2">
@@ -108,55 +115,19 @@ export default function Splash() {
               </Nav.Link>
             </Nav>
             <UserDropdown
-              email={data?.email}
-              displayName={data?.display_name}
-              signout={"Sign Out"}
-              //TODO sign out and redirect
-              onClick={() => {
-                // localStorage.clear();
-                // setToken();
-              }}
+              email={userData?.email}
+              displayName={userData?.display_name}
+              signout={"Logout"}
+              onClick={signOut}
             />
           </Navbar.Collapse>
         </Container>
-      </Navbar>
-
-      {isLoading ? (
-        <h1>Loading...</h1>
-      ) : (
-        <>
-          <Row>
-            <DisplayButton
-              label={"Your Top Artists"}
-              onClick={() => {
-                setSearchType("artists");
-                handleSearch();
-              }}
-            />
-            <DisplayButton
-              label={"Your Top Tracks"}
-              onClick={() => {
-                setSearchType("tracks");
-                handleSearch();
-              }}
-              primary={false}
-            />
-          </Row>
-        </>
-      )}
-
-      <Container>
-        <Row className="justify-content-md-center">
-          {topData?.map((item, index) => (
-            <ContentCard
-              key={index}
-              title={item?.name}
-              footerText={"Visit the artist"}
-              onClick={() => console.log("Clicked")}
-            />
-          ))}
-        </Row>
-      </Container>
+      </Navbar> */}
+      <div style={{ backgroundColor: Colors.darkGrey, minHeight: "100vh" }}>
+        <Container>
+          <h1>Hello</h1>
+        </Container>
+      </div>
     </>
   );
 }

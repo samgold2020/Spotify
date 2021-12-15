@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { RouteNav } from "./constants";
-import Splash from "./screens/Splash/Splash";
 import PrivateRoute from "./PrivateRoute";
 import Home from "./screens/Home/Home";
+import Splash from "./screens/Splash/Splash";
+import TopArtists from "./screens/TopArtists/TopArtists";
 import { AuthContext } from "./context/auth";
+import NavBar from "./components/NavBar";
 
 function App() {
   const getAuthParams = (hash) => {
@@ -41,21 +43,14 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <Routes>
-        <Route path={RouteNav.Home} element={<Home />} />
-        {/* <Route path={RouteNav.Splash} element={<Splash />} /> */}
-
-        <Route
-          path={RouteNav.Splash}
-          element={
-            <PrivateRoute>
-              <Splash />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
-    </div>
+    <React.Fragment>
+      <NavBar />
+      <Switch>
+        <Route path={RouteNav.Home} component={Home} />
+        <Route path={RouteNav.Splash} component={Splash} />
+        <Route path={RouteNav.TopArtists} component={TopArtists} />
+      </Switch>
+    </React.Fragment>
   );
 }
 
