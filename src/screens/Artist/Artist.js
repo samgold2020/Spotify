@@ -85,6 +85,7 @@ const Artist = () => {
               borderWidth: 2,
               backgroundColor: Colors.darkGrey,
               flexDirection: "row",
+              padding: "20px",
             }}
           >
             <p
