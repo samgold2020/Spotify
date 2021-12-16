@@ -65,7 +65,7 @@ function TopArtists({ data }) {
               </div>
               {artistData?.map((item, index) => (
                 <ContentCard
-                  key={index}
+                  key={item.id}
                   title={item?.name}
                   src={item.images[0].url}
                   footerText={"View Artist Details"}

@@ -2,20 +2,38 @@ import React, { useState, useEffect } from "react";
 
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import Card from "react-bootstrap/Card";
+import * as V from "victory";
+import { VictoryPie, VictoryLabel } from "victory";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 import { Colors } from "../../colors";
-import Card from "react-bootstrap/Card";
+import SpinLoader from "../../components/SpinLoader/index";
 
 const Artist = () => {
   const [artistData, setArtistData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
   const location = useLocation();
 
   useEffect(() => {
     viewArtist(location.state.detail);
-    // console.log(location.state.detail);
+    // getArtistsDetails(location.state.detail);
   }, []);
 
-  //TODO Get Artist /v1/artists/id
+  //   GET artists Details
+  //   const getArtistsDetails = async (artistId) => {
+  //     let endpoints = [
+  //       `https://api.spotify.com/v1/artists/${artistId}`,
+  //       `https://api.spotify.com/v1/artists/${artistId}/top-tracks`,
+  //     ];
+  //     await axios
+  //       .all(endpoints.map((endpoint) => axios.get(endpoint)))
+  //       .then((data) => console.log(data));
+  //   };
+
   const viewArtist = async (artistId) => {
     const token = localStorage.getItem("Access_Token");
 
@@ -30,6 +48,7 @@ const Artist = () => {
       if (res.status === 200) {
         console.log("SUCCESSFUL GET", res?.data);
         setArtistData(res?.data);
+        setIsLoading(false);
         //TODO reroute the user with the data to the new route
         // setUserData(res?.data);
       }
@@ -39,78 +58,161 @@ const Artist = () => {
     }
   };
 
-  //   //TODO get each
-  //   const genres = artistData?.genres;
-  //   const genreValues = Object.values(genres);
-  //   console.log(genreValues);
+  const displayGenre = () => {
+    return artistData?.genres.toString().split(",").join(", ");
+  };
+
+  const remainder = 100 - artistData?.popularity;
 
   return (
     <>
-      <div style={{ backgroundColor: Colors.darkGrey, minHeight: "100vh" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            color: Colors.spotifyGreen,
-            padding: "20px",
-          }}
-        >
-          <img
-            src={artistData?.images[1].url}
-            style={{ borderRadius: "50%", width: "25%", minWidth: "20%" }}
-          />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              paddingLeft: "5%",
-            }}
-          >
-            <h1 style={{ fontSize: "80px", fontWeight: "700" }}>
-              {artistData?.name}
-            </h1>
-          </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Card
-            style={{
-              width: "80%",
-              borderColor: Colors.spotifyGreen,
-              borderWidth: 2,
-              backgroundColor: Colors.darkGrey,
-              flexDirection: "row",
-              padding: "20px",
-            }}
-          >
-            <p
+      <Container
+        fluid
+        style={{ backgroundColor: Colors.darkGrey, height: "100vh" }}
+      >
+        {isLoading ? (
+          <SpinLoader />
+        ) : (
+          <>
+            <Row
               style={{
-                color: Colors.spotifyGreen,
-                width: "50%",
-                fontSize: "36px",
-                fontWeight: "500",
+                paddingTop: "40px",
+                display: "flex",
+                alignItems: "center",
               }}
             >
-              Total Followers: {artistData?.followers.total}
-            </p>
-            <p
-              style={{
-                color: Colors.spotifyGreen,
-                width: "50%",
-                fontSize: "36px",
-                fontWeight: "500",
-              }}
-            >
-              Popularity percentile: {artistData?.popularity}%
-            </p>
-          </Card>
-        </div>
-      </div>
+              <Col style={{ paddingLeft: "40px" }}>
+                <img
+                  src={artistData?.images[1].url}
+                  style={{
+                    borderRadius: "15%",
+                  }}
+                />
+              </Col>
+              <Col lg={8}>
+                <h1
+                  style={{
+                    fontSize: "80px",
+                    fontWeight: "700",
+                    marginLeft: "40px",
+                    color: Colors.spotifyGreen,
+                  }}
+                >
+                  {artistData?.name}
+                </h1>
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingLeft: "40px",
+                  }}
+                >
+                  <p style={{ backgroundColor: "pink" }}>{displayGenre()}</p>
+                </div>
+                {/* <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingLeft: "40px",
+                  }}
+                >
+                  {artistData.genres.map((genre) => (
+                    <div style={{ paddingRight: "5px" }}>
+                      <p style={{ backgroundColor: "pink" }}>{genre}</p>
+                    </div>
+                  ))}
+                </div> */}
+              </Col>
+            </Row>
+
+            <Row style={{ padding: "40px" }}>
+              <Col
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  backgroundColor: "green",
+                }}
+              >
+                Fact 1
+              </Col>
+              <Col
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  backgroundColor: "blue",
+                }}
+              >
+                <Card
+                  style={{
+                    width: "50%",
+                    borderColor: Colors.spotifyGreen,
+                    borderWidth: 2,
+                    backgroundColor: Colors.darkGrey,
+                    borderRadius: "15px",
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <Card.Title
+                      style={{
+                        color: Colors.spotifyGreen,
+                        fontSize: "36px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Popularity
+                    </Card.Title>
+                  </div>
+
+                  <svg viewBox="0 0 400 400">
+                    <VictoryPie
+                      standalone={false}
+                      width={400}
+                      height={400}
+                      data={[
+                        { x: "Artist", y: artistData?.popularity },
+                        { x: `${remainder}%`, y: remainder },
+                      ]}
+                      innerRadius={70}
+                      labelRadius={100}
+                      style={{
+                        labels: {
+                          fontSize: 20,
+                          fill: Colors.white,
+                        },
+                      }}
+                    />
+                    <circle
+                      cx="200"
+                      cy="200"
+                      r="65"
+                      fill={Colors.darkGrey}
+                      stroke={Colors.white}
+                      strokeWidth={3}
+                    />
+                    <circle
+                      cx="200"
+                      cy="200"
+                      r="155"
+                      fill="none"
+                      stroke={Colors.white}
+                      strokeWidth={3}
+                    />
+                    <VictoryLabel
+                      textAnchor="middle"
+                      verticalAnchor="middle"
+                      x={200}
+                      y={200}
+                      style={{ fontSize: "30px" }}
+                      text={`${artistData?.popularity}%`}
+                    />
+                  </svg>
+                </Card>
+              </Col>
+            </Row>
+          </>
+        )}
+      </Container>
     </>
   );
 };
