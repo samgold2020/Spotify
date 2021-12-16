@@ -27,10 +27,10 @@ const ContentCard = ({ title, src, body, onClick, footerText, style }) => (
         }}
       />
       <Card.Body>
-        <Card.Title style={{ color: Colors.white, height: "50%" }}>
+        <Card.Title style={{ color: Colors.white, height: "40%" }}>
           {title}
         </Card.Title>
-        {/* <Card.Text style={style}>{body}</Card.Text> */}
+        <Card.Text style={style}>{body}</Card.Text>
         <Button
           onClick={onClick}
           style={{
