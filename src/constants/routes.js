@@ -4,4 +4,5 @@ export default {
   TopArtists: "/topartists",
   TopTracks: "/toptracks",
   Artist: `/viewartist`,
+  Track: '/viewtrack'
 };
