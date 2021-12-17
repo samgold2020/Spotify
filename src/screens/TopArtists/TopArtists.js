@@ -24,7 +24,7 @@ function TopArtists({ data }) {
       getArtists(token);
     } else {
       //No token
-      console.log("No ToKen");
+      console.log("No Token");
     }
   }, []);
 

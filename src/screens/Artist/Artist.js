@@ -11,6 +11,7 @@ import Col from "react-bootstrap/Col";
 
 import { Colors } from "../../colors";
 import SpinLoader from "../../components/SpinLoader/index";
+import DisplayButton from '../../components/Button';
 
 const Artist = () => {
   const [artistData, setArtistData] = useState();
@@ -49,15 +50,14 @@ const Artist = () => {
         console.log("SUCCESSFUL GET", res?.data);
         setArtistData(res?.data);
         setIsLoading(false);
-        //TODO reroute the user with the data to the new route
-        // setUserData(res?.data);
       }
-      //   return artistData;
+        // return artistData;
     } catch (err) {
       console.log("THIS IS THE ERROR");
     }
   };
 
+  //TODO Capitalize each letter
   const displayGenre = () => {
     return artistData?.genres.toString().split(",").join(", ");
   };
@@ -108,21 +108,8 @@ const Artist = () => {
                     paddingLeft: "40px",
                   }}
                 >
-                  <p style={{ backgroundColor: "pink" }}>{displayGenre()}</p>
+                  <p style={{color: Colors.white }}>{displayGenre()}</p>
                 </div>
-                {/* <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    paddingLeft: "40px",
-                  }}
-                >
-                  {artistData.genres.map((genre) => (
-                    <div style={{ paddingRight: "5px" }}>
-                      <p style={{ backgroundColor: "pink" }}>{genre}</p>
-                    </div>
-                  ))}
-                </div> */}
               </Col>
             </Row>
 
@@ -131,10 +118,9 @@ const Artist = () => {
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  backgroundColor: "green",
+
                 }}
               >
-                Fact 1
               </Col>
               <Col
                 style={{
