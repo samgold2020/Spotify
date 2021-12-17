@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import { Colors } from "../../colors";
 
 const ContentCard = ({ title, src, body, onClick, footerText, style }) => (
-  <Col>
+  <Col style={{display: 'flex', justifyContent: 'center'}}>
     <Card
       style={{
         width: "15rem",
