@@ -8,8 +8,11 @@ import { RouteNav } from "./constants";
 import Home from "./screens/Home/Home";
 import Splash from "./screens/Splash/Splash";
 import TopArtists from "./screens/TopArtists/TopArtists";
+import TopTracks from "./screens/TopTracks/TopTracks";
 import NavBar from "./components/NavBar";
+//TODO move to other folder for topArtists
 import Artist from "./screens/Artist/Artist";
+import Track from './screens/TopTracks/Track';
 
 function App() {
   const [token, setToken] = useState();
@@ -47,40 +50,42 @@ function App() {
     setToken(localStorage.getItem("Access_Token"));
   }, []);
 
-  useEffect(() => {
-    if (token) {
-      getUserData();
-    }
-    console.log("TOKEN", token);
-  }, []);
+  // useEffect(() => {
+  //     getUserData();
+  // }, []);
 
-  async function getUserData() {
-    try {
-      let res = await axios({
-        url: "https://api.spotify.com/v1/me",
-        method: "get",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.status === 200) {
-        console.log("SUCCESSFUL GET", res);
-        setUserData(res?.data);
-      }
-      return userData;
-    } catch (err) {
-      console.log("THIS IS THE ERROR");
-    }
-  }
+  // async function getUserData() {
+  //   try {
+  //     let res = await axios({
+  //       url: "https://api.spotify.com/v1/me",
+  //       method: "get",
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     if (res.status === 200) {
+  //       console.log("SUCCESSFUL GET", res);
+  //       setUserData(res?.data);
+  //     }
+  //     return userData;
+  //   } catch (err) {
+  //     console.log("THIS IS THE ERROR");
+  //   }
+  //   return userData;
+  // }
+
+  // console.log("userData", userData)
 
   return (
     <React.Fragment>
-      <NavBar data={userData} />
+      <NavBar />
       <Switch>
         <Route path={RouteNav.Home} component={Home} />
         <Route path={RouteNav.Splash} component={Splash} />
         <Route path={RouteNav.TopArtists} data={token} component={TopArtists} />
+        <Route path={RouteNav.TopTracks} data={token} component={TopTracks} />
         <Route path={RouteNav.Artist} component={Artist} />
+        <Route path={RouteNav.Track} component={Track} />
       </Switch>
     </React.Fragment>
   );
