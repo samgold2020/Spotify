@@ -40,6 +40,7 @@ const Artist = () => {
 
     try {
       let res = await axios({
+        // url: `https://api.spotify.com/v1/artists/${artistId}/top-tracks`,
         url: `https://api.spotify.com/v1/artists/${artistId}`,
         method: "get",
         headers: {

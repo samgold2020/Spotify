@@ -17,6 +17,7 @@ const styles = {
     width: "18rem",
     height: "5rem",
     borderRadius: "15px",
+    paddingRight: '10px',
   },
   secondaryButton: {
     backgroundColor: "white",

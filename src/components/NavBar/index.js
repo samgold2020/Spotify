@@ -7,9 +7,11 @@ import Nav from "react-bootstrap/Nav";
 
 import styles from "./styles";
 import UserDropdown from "../DropdownMenu";
+import SpinLoader from "../SpinLoader";
 
 function NavBar() {
   const [userData, setUserData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   //TODO sign out and redirect
   const signOut = () => {
@@ -39,6 +41,7 @@ async function getUserData(token) {
     if (res.status === 200) {
       console.log("SUCCESSFUL GET", res);
       setUserData(res?.data);
+      setIsLoading(false)
     }
     return userData;
   } catch (err) {
@@ -46,8 +49,6 @@ async function getUserData(token) {
   }
   return userData;
 }
-
-console.log("userData", userData)
 
   return (
     <Navbar style={styles.navbar} expand="lg">
@@ -72,6 +73,9 @@ console.log("userData", userData)
               Top Tracks
             </Nav.Link>
           </Nav>
+          {isLoading ?(
+      <SpinLoader />
+    ) : (
           <UserDropdown
             email={userData?.email}
             name={userData?.display_name}
@@ -79,6 +83,7 @@ console.log("userData", userData)
             signout={"Logout"}
             // onClick={signOut}
           />
+    )}
         </Navbar.Collapse>
       </Container>
     </Navbar>
