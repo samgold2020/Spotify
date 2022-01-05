@@ -13,12 +13,11 @@ function NavBar() {
   const [userData, setUserData] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
-  //TODO sign out and redirect
-  const signOut = () => {
-    // const url = "https://www.spotify.com/logout/";
-    // window.open(url, "Spotify Logout", "width=700,height=500,top=40,left=40");
-    // setTimeout(() => spotifyLogoutWindow.close(), 2000);
-  };
+  function signOut() {
+    localStorage.clear();
+    console.log(" logged out successfully" + window.status);
+    window.location.href = "http://localhost:3001/home";
+}
 
   useEffect(() => {
     const token = localStorage.getItem("Access_Token");
@@ -81,7 +80,7 @@ async function getUserData(token) {
             name={userData?.display_name}
             src={userData?.images[0].url}
             signout={"Logout"}
-            // onClick={signOut}
+            onClick={signOut}
           />
     )}
         </Navbar.Collapse>
