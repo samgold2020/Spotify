@@ -1,8 +1,8 @@
 export default {
-  Home: "/home",
-  Splash: "/splash",
-  TopArtists: "/topartists",
-  TopTracks: "/toptracks",
+  Login: '/login',
+  // Splash: "/splash",
+  TopArtists: '/topartists',
+  TopTracks: '/toptracks',
   Artist: `/viewartist`,
-  Track: '/viewtrack'
+  Track: '/viewtrack',
 };
