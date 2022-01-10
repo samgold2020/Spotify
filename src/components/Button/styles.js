@@ -22,12 +22,11 @@ const styles = {
   secondaryButton: {
     backgroundColor: "white",
     borderColor: "green",
-    color: "green",
-    fontSize: 24,
+    color: Colors.spotifyGreen,
+    fontSize: '1.5rem',
     fontWeight: "700",
-    width: "18rem",
-    height: "5rem",
-    borderRadius: "15px",
+    margin: '1rem'
+
   },
 };
 
