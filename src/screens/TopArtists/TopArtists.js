@@ -50,10 +50,10 @@ function TopArtists({ data }) {
     setIndex(selectedIndex);
   };
 
-  const handleSubmit = artistId => {
+  const handleSubmit = artist => {
     history.push({
       pathname: '/viewartist',
-      state: { detail: artistId },
+      state: { detail: artist.id, name: artist.name },
     });
   };
 
@@ -128,7 +128,7 @@ function TopArtists({ data }) {
                       }}
                       variant="primary"
                       onClick={() => {
-                        handleSubmit(item.id);
+                        handleSubmit(item);
                       }}
                     >
                       View Artist

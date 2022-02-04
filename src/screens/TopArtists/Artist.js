@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import Card from 'react-bootstrap/Card';
-import { VictoryPie, VictoryLabel } from 'victory';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -22,23 +20,11 @@ const Artist = () => {
     // getArtistsDetails(location.state.detail);
   }, []);
 
-  //   GET artists Details
-  //   const getArtistsDetails = async (artistId) => {
-  //     let endpoints = [
-  //       `https://api.spotify.com/v1/artists/${artistId}`,
-  //       `https://api.spotify.com/v1/artists/${artistId}/top-tracks`,
-  //     ];
-  //     await axios
-  //       .all(endpoints.map((endpoint) => axios.get(endpoint)))
-  //       .then((data) => console.log(data));
-  //   };
-
   const viewArtist = async artistId => {
     const token = localStorage.getItem('Access_Token');
 
     try {
       let res = await axios({
-        // url: `https://api.spotify.com/v1/artists/${artistId}/top-tracks`,
         url: `https://api.spotify.com/v1/artists/${artistId}`,
         method: 'get',
         headers: {
@@ -60,6 +46,39 @@ const Artist = () => {
   const displayGenre = () => {
     return artistData?.genres.toString().split(',').join(', ');
   };
+
+  const artistName = location.state.name;
+
+  const [contents, setContents] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const url = `https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=${artistName}`;
+
+  const extractAPIContents = json => {
+    const { pages } = json.query;
+    return Object.keys(pages).map(id => pages[id].extract);
+  };
+
+  const getContents = async () => {
+    let resp;
+    let contents = [];
+    setLoading(true);
+    try {
+      resp = await fetch(url);
+      let json = await resp.json();
+      contents = extractAPIContents(json);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+    setContents(contents);
+  };
+
+  useEffect(() => {
+    getContents();
+  }, []);
 
   return (
     <>
@@ -119,6 +138,13 @@ const Artist = () => {
             </Row>
           </>
         )}
+        <div
+          style={{
+            color: Colors.white,
+          }}
+        >
+          {contents}
+        </div>
       </Container>
     </>
   );
