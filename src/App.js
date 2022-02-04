@@ -17,35 +17,6 @@ import Track from './screens/TopTracks/Track';
 function App() {
   const [token, setToken] = useState();
 
-  function Deck() {
-    this.deck = [];
-    const suits = ['diamonds', 'clubs', 'hearts', 'spades'];
-    const values = [
-      'A',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      'T',
-      'J',
-      'Q',
-      'K',
-    ];
-    for (let suit in suits) {
-      for (let value in values) {
-        this.deck.push(`${values[value]} of ${suits[suit]}`);
-      }
-    }
-  }
-
-  const cardDeck = new Deck();
-
-  console.log('Card Deck???', cardDeck);
-
   const getAuthParams = hash => {
     //hash is the URL (window.location.hash)?? Which is everything after the has "#"??
     //Return the string after index 1
