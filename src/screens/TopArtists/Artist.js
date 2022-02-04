@@ -61,8 +61,6 @@ const Artist = () => {
     return artistData?.genres.toString().split(',').join(', ');
   };
 
-  const remainder = 100 - artistData?.popularity;
-
   return (
     <>
       <Container
@@ -75,12 +73,11 @@ const Artist = () => {
           <>
             <Row
               style={{
-                paddingTop: '40px',
                 display: 'flex',
                 alignItems: 'center',
               }}
             >
-              <Col style={{ paddingLeft: '40px' }}>
+              <Col sm={6} style={{ padding: '2rem', backgroundColor: 'blue' }}>
                 <img
                   src={artistData?.images[1].url}
                   style={{
@@ -89,109 +86,35 @@ const Artist = () => {
                   alt={`${artistData.name} profile art`}
                 />
               </Col>
-              <Col lg={8}>
+              <Col>
                 <h1
                   style={{
-                    fontSize: '80px',
+                    fontSize: '5rem',
                     fontWeight: '700',
-                    marginLeft: '40px',
                     color: Colors.spotifyGreen,
+                    textAlign: 'center',
                   }}
                 >
                   {artistData?.name}
                 </h1>
 
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    paddingLeft: '40px',
-                  }}
-                >
-                  <p style={{ color: Colors.white }}>{displayGenre()}</p>
-                </div>
+                <p style={{ color: Colors.white }}>{displayGenre()}</p>
               </Col>
             </Row>
 
-            <Row style={{ padding: '40px' }}>
+            <Row
+              style={{
+                padding: '40px',
+              }}
+            >
               <Col
                 style={{
                   display: 'flex',
                   justifyContent: 'center',
-                }}
-              ></Col>
-              <Col
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  backgroundColor: 'blue',
+                  backgroundColor: Colors.spotifyGreen,
                 }}
               >
-                <Card
-                  style={{
-                    width: '50%',
-                    borderColor: Colors.spotifyGreen,
-                    borderWidth: 2,
-                    backgroundColor: Colors.darkGrey,
-                    borderRadius: '15px',
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Card.Title
-                      style={{
-                        color: Colors.spotifyGreen,
-                        fontSize: '36px',
-                        fontWeight: '500',
-                      }}
-                    >
-                      Popularity
-                    </Card.Title>
-                  </div>
-
-                  <svg viewBox="0 0 400 400">
-                    <VictoryPie
-                      standalone={false}
-                      width={400}
-                      height={400}
-                      data={[
-                        { x: 'Artist', y: artistData?.popularity },
-                        { x: `${remainder}%`, y: remainder },
-                      ]}
-                      innerRadius={70}
-                      labelRadius={100}
-                      style={{
-                        labels: {
-                          fontSize: 20,
-                          fill: Colors.white,
-                        },
-                      }}
-                    />
-                    <circle
-                      cx="200"
-                      cy="200"
-                      r="65"
-                      fill={Colors.darkGrey}
-                      stroke={Colors.white}
-                      strokeWidth={3}
-                    />
-                    <circle
-                      cx="200"
-                      cy="200"
-                      r="155"
-                      fill="none"
-                      stroke={Colors.white}
-                      strokeWidth={3}
-                    />
-                    <VictoryLabel
-                      textAnchor="middle"
-                      verticalAnchor="middle"
-                      x={200}
-                      y={200}
-                      style={{ fontSize: '30px' }}
-                      text={`${artistData?.popularity}%`}
-                    />
-                  </svg>
-                </Card>
+                <div>Playlist coming February 2021</div>
               </Col>
             </Row>
           </>

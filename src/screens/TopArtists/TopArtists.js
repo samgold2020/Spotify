@@ -133,7 +133,8 @@ function TopArtists({ data }) {
                     >
                       View Artist
                     </Button>
-                    <Button
+                    {/* //TODO Move to artist page */}
+                    {/* <Button
                       style={{
                         backgroundColor: Colors.darkGrey,
                         color: Colors.white,
@@ -144,7 +145,7 @@ function TopArtists({ data }) {
                       }}
                     >
                       Open in Spotify
-                    </Button>
+                    </Button> */}
                   </div>
                 </Carousel.Caption>
               </Carousel.Item>

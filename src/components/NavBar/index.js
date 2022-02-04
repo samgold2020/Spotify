@@ -50,6 +50,7 @@ function NavBar() {
     return userData;
   }
 
+  console.log('Users data', userData);
   return (
     <Navbar style={styles.navbar} expand="lg">
       <Container fluid>
@@ -84,6 +85,7 @@ function NavBar() {
               email={userData?.email}
               name={userData?.display_name}
               src={userData?.images[0].url}
+              followers={userData?.followers.total}
               signout={'Logout'}
               onClick={signOut}
             />
