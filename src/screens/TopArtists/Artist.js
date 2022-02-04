@@ -117,7 +117,9 @@ const Artist = () => {
                   {artistData?.name}
                 </h1>
 
-                <p style={{ color: Colors.white }}>{displayGenre()}</p>
+                <p style={{ color: Colors.white, textAlign: 'center' }}>
+                  {displayGenre()}
+                </p>
               </Col>
             </Row>
 
