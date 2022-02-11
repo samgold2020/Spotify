@@ -99,7 +99,7 @@ function TopArtists({ data }) {
                   style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    backgroundColor: 'green',
+                    backgroundColor: Colors.lightGrey,
                   }}
                 >
                   <img
