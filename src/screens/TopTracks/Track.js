@@ -5,9 +5,11 @@ import { useLocation } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 
 import { Colors } from '../../colors';
+import TrackData from '../../components/TrackData';
 
 function Track() {
-  const [trackData, setTrackData] = useState();
+  const [trackData, setTrackData] = useState('');
+  const [percentData, setPercentData] = useState();
 
   const location = useLocation();
 
@@ -29,23 +31,42 @@ function Track() {
       });
       if (res.status === 200) {
         setTrackData(res?.data);
+        console.log('response', res);
         // setIsLoading(false);
       }
-      // return artistData;
+      return trackData;
     } catch (err) {
       console.log('THIS IS THE ERROR');
     }
   };
 
-  console.log('trackData', trackData.energy);
+  const decimalToPercentDisplay = () => {
+    const dataToPercent = [
+      'acousticness',
+      'danceability',
+      'energy',
+      'instrumentalness',
+      'liveness',
+      'loudness',
+      'speechiness',
+      'valence',
+    ];
+    //TODO turn the decimal from the object
+    Object.entries(trackData).map(([key, value]) => {
+      if (dataToPercent.includes(key)) {
+        console.log('KEY', key);
+      }
+    });
+  };
+
+  decimalToPercentDisplay();
+
   return (
     <>
       <Container
         fluid
         style={{ backgroundColor: Colors.darkGrey, height: '100vh' }}
-      >
-        <h1>Track!</h1>
-      </Container>
+      ></Container>
     </>
   );
 }
