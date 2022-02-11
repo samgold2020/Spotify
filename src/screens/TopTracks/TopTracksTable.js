@@ -2,7 +2,6 @@ import React from 'react';
 
 import { useHistory } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
-import Container from 'react-bootstrap/Container';
 
 import { Colors } from '../../colors';
 
@@ -18,15 +17,7 @@ const ArtistTable = ({ data }) => {
     });
   };
   return (
-    <Table
-      striped
-      bordered
-      hover
-      responsive="sm"
-      // size="sm"
-      variant="dark"
-      bordered={false}
-    >
+    <Table striped hover responsive="sm" variant="dark" bordered={false}>
       <thead>
         <tr style={{ color: Colors.white }}>
           <th></th>
@@ -35,13 +26,7 @@ const ArtistTable = ({ data }) => {
           <th>Album</th>
         </tr>
       </thead>
-      <tbody
-        style={
-          {
-            // backgroundColor: 'green',
-          }
-        }
-      >
+      <tbody>
         {data?.items.map(song => (
           <tr
             onClick={() => handleClick(song.id)}
