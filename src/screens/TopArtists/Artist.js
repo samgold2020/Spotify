@@ -12,8 +12,12 @@ import SpinLoader from '../../components/SpinLoader/index';
 const Artist = () => {
   const [artistData, setArtistData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [wickiContent, setWickiContent] = useState([]);
 
   const location = useLocation();
+
+  const artistName = location.state.name;
+  const url = `https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=${artistName}`;
 
   useEffect(() => {
     viewArtist(location.state.detail);
@@ -32,7 +36,7 @@ const Artist = () => {
         },
       });
       if (res.status === 200) {
-        console.log('SUCCESSFUL GET', res?.data);
+        // console.log('SUCCESSFUL GET', res?.data);
         setArtistData(res?.data);
         setIsLoading(false);
       }
@@ -47,45 +51,25 @@ const Artist = () => {
     return artistData?.genres.toString().split(',').join(', ');
   };
 
-  const artistName = location.state.name;
-
-  const [contents, setContents] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState();
-
-  const url = `https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=${artistName}`;
-
-  const extractAPIContents = json => {
-    const { pages } = json.query;
-    return Object.keys(pages).map(id => pages[id].extract);
+  const getWickiArtistContent = async () => {
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        const { pages } = data.query;
+        setWickiContent(Object.keys(pages).map(id => pages[id].extract));
+        setIsLoading(false);
+      })
+      .catch(e => console.log(e));
   };
-
-  const getContents = async () => {
-    let resp;
-    let contents = [];
-    setLoading(true);
-    try {
-      resp = await fetch(url);
-      let json = await resp.json();
-      contents = extractAPIContents(json);
-    } catch (err) {
-      setError(err);
-    } finally {
-      setLoading(false);
-    }
-    setContents(contents);
-  };
+  console.log('content from Wicik', wickiContent.length);
 
   useEffect(() => {
-    getContents();
+    getWickiArtistContent();
   }, []);
 
   return (
-    <>
-      <Container
-        fluid
-        style={{ backgroundColor: Colors.darkGrey, height: '100vh' }}
-      >
+    <div style={{ backgroundColor: Colors.darkGrey, minHeight: '100vh' }}>
+      <Container fluid>
         {isLoading ? (
           <SpinLoader />
         ) : (
@@ -96,7 +80,14 @@ const Artist = () => {
                 alignItems: 'center',
               }}
             >
-              <Col sm={6} style={{ padding: '2rem', backgroundColor: 'blue' }}>
+              <Col
+                style={{
+                  padding: '2rem',
+                  borderRadius: '15px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
                 <img
                   src={artistData?.images[1].url}
                   style={{
@@ -105,22 +96,20 @@ const Artist = () => {
                   alt={`${artistData.name} profile art`}
                 />
               </Col>
-              <Col>
-                <h1
-                  style={{
-                    fontSize: '5rem',
-                    fontWeight: '700',
-                    color: Colors.spotifyGreen,
-                    textAlign: 'center',
-                  }}
-                >
-                  {artistData?.name}
-                </h1>
+              <h1
+                style={{
+                  fontSize: '5rem',
+                  fontWeight: '700',
+                  color: Colors.spotifyGreen,
+                  textAlign: 'center',
+                }}
+              >
+                {artistData?.name}
+              </h1>
 
-                <p style={{ color: Colors.white, textAlign: 'center' }}>
-                  {displayGenre()}
-                </p>
-              </Col>
+              <p style={{ color: Colors.white, textAlign: 'center' }}>
+                {displayGenre()}
+              </p>
             </Row>
 
             <Row
@@ -132,23 +121,20 @@ const Artist = () => {
                 style={{
                   display: 'flex',
                   justifyContent: 'center',
-                  backgroundColor: Colors.spotifyGreen,
+                  border: `1px solid ${Colors.spotifyGreen}`,
+                  color: Colors.white,
+                  padding: '40px',
+                  fontSize: '1.5rem',
+                  borderRadius: '15px',
                 }}
               >
-                <div>Playlist coming February 2021</div>
+                <div>{wickiContent}</div>
               </Col>
             </Row>
           </>
         )}
-        <div
-          style={{
-            color: Colors.white,
-          }}
-        >
-          {contents}
-        </div>
       </Container>
-    </>
+    </div>
   );
 };
 
