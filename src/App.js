@@ -11,6 +11,7 @@ import NavBar from './components/NavBar';
 //TODO move to other folder for topArtists
 import Artist from './screens/TopArtists/Artist';
 import Track from './screens/TopTracks/Track';
+import Footer from './components/Footer';
 //TODO MAKE A FOOTER WITH GITHUB AND LINKEDIN
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
           <Route path={RouteNav.TopTracks} data={token} component={TopTracks} />
           <Route path={RouteNav.Artist} component={Artist} />
           <Route path={RouteNav.Track} component={Track} />
+          <Footer />
         </div>
       </Switch>
     </React.Fragment>
