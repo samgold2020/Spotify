@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { RouteNav } from './constants';
 import Login from './screens/Login/Login';
-// import Splash from './screens/Splash/Splash';
 import TopArtists from './screens/TopArtists/TopArtists';
 import TopTracks from './screens/TopTracks/TopTracks';
 import NavBar from './components/NavBar';
@@ -56,7 +55,6 @@ function App() {
         <Route path={RouteNav.Login} component={Login} />
         <div>
           <NavBar />
-          {/* <Route path={RouteNav.Splash} component={Splash} /> */}
           <Route
             path={RouteNav.TopArtists}
             data={token}

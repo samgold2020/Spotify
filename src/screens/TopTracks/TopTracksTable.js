@@ -10,10 +10,15 @@ const ArtistTable = ({ data }) => {
 
   const history = useHistory();
 
-  const handleClick = songId => {
+  const handleClick = song => {
     history.push({
       pathname: '/viewtrack',
-      state: { detail: songId },
+      state: {
+        detail: song.id,
+        artist: song.artists[0].name,
+        title: song.name,
+        art: song.album.images[2].url,
+      },
     });
   };
   return (
@@ -28,10 +33,7 @@ const ArtistTable = ({ data }) => {
       </thead>
       <tbody>
         {data?.items.map(song => (
-          <tr
-            onClick={() => handleClick(song.id)}
-            style={{ color: Colors.white }}
-          >
+          <tr onClick={() => handleClick(song)} style={{ color: Colors.white }}>
             <td>
               <img
                 style={{ width: '40px' }}

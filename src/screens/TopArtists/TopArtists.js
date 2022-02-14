@@ -123,9 +123,11 @@ function TopArtists({ data }) {
                       style={{
                         backgroundColor: Colors.spotifyGreen,
                         borderColor: Colors.spotifyGreen,
-                        color: Colors.white,
+                        color: Colors.lightGrey,
                         marginRight: '20px',
+                        fontWeight: 700,
                       }}
+                      size="lg"
                       variant="primary"
                       onClick={() => {
                         handleSubmit(item);
@@ -134,18 +136,20 @@ function TopArtists({ data }) {
                       View Artist
                     </Button>
                     {/* //TODO Move to artist page */}
-                    {/* <Button
+                    <Button
                       style={{
                         backgroundColor: Colors.darkGrey,
-                        color: Colors.white,
+                        color: Colors.spotifyGreen,
+                        fontWeight: 700,
                       }}
+                      size="lg"
                       variant="outline-secondary"
                       onClick={() => {
                         openSpotify(item.external_urls.spotify);
                       }}
                     >
                       Open in Spotify
-                    </Button> */}
+                    </Button>
                   </div>
                 </Carousel.Caption>
               </Carousel.Item>

@@ -54,7 +54,7 @@ function NavBar() {
   return (
     <Navbar style={styles.navbar} expand="lg">
       <Container fluid>
-        <Navbar.Brand style={styles.navbarTitle} href="/splash">
+        <Navbar.Brand style={styles.navbarTitle} href="/topartists">
           <img
             style={{ width: '65px', height: '65px', marginLeft: '10px' }}
             src={SpotifyLogo}
