@@ -5,19 +5,15 @@ import { useHistory } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 
 import { Colors } from '../../colors';
-// import DisplayButton from '../../components/Button';
 import SpinLoader from '../../components/SpinLoader/index';
 import Button from 'react-bootstrap/Button';
 
-function TopArtists({ data }) {
-  // const [token, setToken] = useState();
+function TopArtists() {
   const [artistData, setArtistData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  // const [artistId, setArtistId] = useState('');
   const [index, setIndex] = useState(0);
 
   const history = useHistory();
-  console.log('Artist data outside', artistData);
 
   useEffect(() => {
     const token = localStorage.getItem('Access_Token');
@@ -26,7 +22,6 @@ function TopArtists({ data }) {
 
   const getArtists = async token => {
     try {
-      //Add users top tracks
       let res = await axios({
         url: 'https://api.spotify.com/v1/me/top/artists',
         method: 'get',
@@ -36,7 +31,6 @@ function TopArtists({ data }) {
       });
       if (res.status === 200) {
         setArtistData(res?.data.items);
-        console.log('Ari', artistData);
         setIsLoading(false);
       }
       return artistData;
@@ -58,8 +52,7 @@ function TopArtists({ data }) {
   };
 
   function openSpotify(hyperlink) {
-    //  console.log(hyperlink)
-    window.location.href = hyperlink;
+    window.open(hyperlink);
   }
 
   return (
@@ -125,7 +118,6 @@ function TopArtists({ data }) {
                         borderColor: Colors.spotifyGreen,
                         color: Colors.lightGrey,
                         marginRight: '20px',
-                        fontWeight: 700,
                       }}
                       size="lg"
                       variant="primary"
@@ -135,12 +127,10 @@ function TopArtists({ data }) {
                     >
                       View Artist
                     </Button>
-                    {/* //TODO Move to artist page */}
                     <Button
                       style={{
                         backgroundColor: Colors.darkGrey,
                         color: Colors.spotifyGreen,
-                        fontWeight: 700,
                       }}
                       size="lg"
                       variant="outline-secondary"
