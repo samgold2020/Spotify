@@ -77,7 +77,7 @@ function Track() {
     setPercentData(percentDataArr);
   };
 
-  // console.log('yo', percentData.length);
+  console.log('yo', percentData);
 
   return (
     <div style={{ backgroundColor: Colors.darkGrey, minHeight: '100vh' }}>
@@ -120,15 +120,16 @@ function Track() {
                     <TrackData title={key} text={key} value={value} />
                   ))} */}
                 {percentData?.map(item => (
-                  <div
-                    style={{
-                      color: 'white',
-                      backgroundColor: 'blue',
-                      width: '100%',
-                    }}
-                  >
-                    {item}
-                  </div>
+                  <TrackData title={item[0]} text={item[0]} value={item[1]} />
+                  // <div
+                  //   style={{
+                  //     color: 'white',
+                  //     backgroundColor: 'blue',
+                  //     width: '100%',
+                  //   }}
+                  // >
+                  //   {item}
+                  // </div>
                 ))}
                 {/* </div> */}
               </Col>
