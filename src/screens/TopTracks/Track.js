@@ -24,15 +24,6 @@ function Track() {
 
   const viewTrack = async trackId => {
     const token = localStorage.getItem('Access_Token');
-    const dataToPercent = [
-      'acousticness',
-      'danceability',
-      'energy',
-      'instrumentalness',
-      'liveness',
-      'speechiness',
-      'valence',
-    ];
 
     try {
       let res = await axios({
@@ -43,15 +34,17 @@ function Track() {
         },
       });
       if (res.status === 200) {
-        setTrackData(res);
+        setTrackData(res.data);
         setIsLoading(false);
+        manipulateData(res.data);
         // console.log('response', res);
-        Object.entries(trackData)?.map(([key, value]) => {
-          if (dataToPercent.includes(key)) {
-            let percent = value * 100;
-            setPercentData([key, percent]);
-          }
-        });
+        // Object.entries(trackData)?.map(([key, value]) => {
+        //   console.log('key', key, value);
+        //   if (dataToPercent.includes(key)) {
+        //     // let percent = value * 100;
+        //     setPercentData([key, value]);
+        //   }
+        // });
         setIsLoading(false);
       }
       return trackData;
@@ -60,7 +53,31 @@ function Track() {
     }
   };
 
-  // console.log(percentData?.map(item => console.log('item', item)));
+  //Turn trackData into what I want it to be before sending it down
+
+  const manipulateData = trackData => {
+    let percentDataArr = [];
+
+    const displayPercentData = [
+      'acousticness',
+      'danceability',
+      'energy',
+      'instrumentalness',
+      'liveness',
+      'speechiness',
+      'valence',
+    ];
+
+    Object.entries(trackData)?.map(([key, value]) => {
+      if (displayPercentData?.includes(key)) {
+        let percent = value * 100;
+        percentDataArr.push([key, percent]);
+      }
+    });
+    setPercentData(percentDataArr);
+  };
+
+  // console.log('yo', percentData.length);
 
   return (
     <div style={{ backgroundColor: Colors.darkGrey, minHeight: '100vh' }}>
@@ -95,11 +112,29 @@ function Track() {
                 </h1>
               </Col>
             </Row>
+            <Row>
+              <Col>
+                {/* //Return a function??? */}
+                {/* <div style={{ display: 'flex' }}> */}
+                {/* {Object.entries(trackData)?.map(([key, value]) => (
+                    <TrackData title={key} text={key} value={value} />
+                  ))} */}
+                {percentData?.map(item => (
+                  <div
+                    style={{
+                      color: 'white',
+                      backgroundColor: 'blue',
+                      width: '100%',
+                    }}
+                  >
+                    {item}
+                  </div>
+                ))}
+                {/* </div> */}
+              </Col>
+            </Row>
           </>
         )}
-        {/* {percentData?.map(item => (
-          <TrackData text={item} />
-        ))} */}
       </Container>
     </div>
   );
