@@ -6,8 +6,6 @@ import Table from 'react-bootstrap/Table';
 import { Colors } from '../../colors';
 
 const ArtistTable = ({ data }) => {
-  console.log('data in table', data);
-
   const history = useHistory();
 
   const handleClick = song => {

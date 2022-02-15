@@ -10,6 +10,8 @@ import UserDropdown from '../DropdownMenu';
 import SpinLoader from '../SpinLoader';
 import SpotifyLogo from './SpotifyLogo.png';
 
+//TODO Move Navbar out of components? Not sure where this should go but it's not a component
+
 function NavBar() {
   const [userData, setUserData] = useState();
   const [isLoading, setIsLoading] = useState(true);
