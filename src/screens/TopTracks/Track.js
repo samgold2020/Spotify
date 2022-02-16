@@ -37,14 +37,6 @@ function Track() {
         setTrackData(res.data);
         setIsLoading(false);
         manipulateData(res.data);
-        // console.log('response', res);
-        // Object.entries(trackData)?.map(([key, value]) => {
-        //   console.log('key', key, value);
-        //   if (dataToPercent.includes(key)) {
-        //     // let percent = value * 100;
-        //     setPercentData([key, value]);
-        //   }
-        // });
         setIsLoading(false);
       }
       return trackData;
@@ -52,8 +44,6 @@ function Track() {
       console.log('THIS IS THE ERROR');
     }
   };
-
-  //Turn trackData into what I want it to be before sending it down
 
   const manipulateData = trackData => {
     let percentDataArr = [];
@@ -70,7 +60,7 @@ function Track() {
 
     Object.entries(trackData)?.map(([key, value]) => {
       if (displayPercentData?.includes(key)) {
-        let percent = value * 100;
+        let percent = (value * 100).toFixed(2);
         percentDataArr.push([key, percent]);
       }
     });
@@ -98,6 +88,8 @@ function Track() {
                   borderRadius: '15px',
                   display: 'flex',
                   justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
                 }}
               >
                 <h1
@@ -105,33 +97,49 @@ function Track() {
                     fontSize: '5rem',
                     fontWeight: '700',
                     color: Colors.spotifyGreen,
-                    textAlign: 'center',
                   }}
                 >
                   {location.state.title}
                 </h1>
+                <div
+                  style={{
+                    fontSize: '3rem',
+                    fontWeight: '700',
+                    color: Colors.spotifyGreen,
+                  }}
+                >
+                  By
+                </div>
+                <div
+                  style={{
+                    fontSize: '4rem',
+                    fontWeight: '700',
+                    color: Colors.spotifyGreen,
+                  }}
+                >
+                  {location.state.artist}
+                </div>
               </Col>
             </Row>
+
             <Row>
               <Col>
-                {/* //Return a function??? */}
-                {/* <div style={{ display: 'flex' }}> */}
-                {/* {Object.entries(trackData)?.map(([key, value]) => (
-                    <TrackData title={key} text={key} value={value} />
-                  ))} */}
-                {percentData?.map(item => (
-                  <TrackData title={item[0]} text={item[0]} value={item[1]} />
-                  // <div
-                  //   style={{
-                  //     color: 'white',
-                  //     backgroundColor: 'blue',
-                  //     width: '100%',
-                  //   }}
-                  // >
-                  //   {item}
-                  // </div>
-                ))}
-                {/* </div> */}
+                <div
+                  style={{
+                    display: 'flex',
+                    border: `1px solid ${Colors.spotifyGreen}`,
+                    borderRadius: '15px',
+                    padding: '40px',
+                  }}
+                >
+                  {percentData?.map(item => (
+                    <TrackData
+                      title={item[0]}
+                      text={`${item[1]} %`}
+                      value={item[1]}
+                    />
+                  ))}
+                </div>
               </Col>
             </Row>
           </>
