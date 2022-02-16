@@ -5,14 +5,26 @@ import Row from 'react-bootstrap/Row';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
+import DisplayButton from '../Button/index';
 import { Colors } from '../../colors';
 
 const TrackData = ({ title, value, text }) => (
   <>
+    <div>
+      <DisplayButton label={title} onClick={() => console.log('CLICK')}>
+        {title}
+      </DisplayButton>
+    </div>
     <Row>
-      <div>{title}</div>
       <Col>
-        <div style={{ width: 200, height: 200 }}>
+        <div
+          style={
+            {
+              // minWidth: '6em',
+              // display: 'flex',
+            }
+          }
+        >
           <CircularProgressbar
             value={value}
             text={text}
@@ -24,7 +36,8 @@ const TrackData = ({ title, value, text }) => (
               strokeLinecap: 'butt',
 
               // Text size
-              textSize: '16px',
+              textSize: '1em',
+              // minWidth: '5em',
 
               // How long animation takes to go from one percentage to another, in seconds
               pathTransitionDuration: 0.5,
