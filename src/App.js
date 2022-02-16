@@ -48,20 +48,14 @@ function App() {
     setToken(localStorage.getItem('Access_Token'));
   }, []);
 
-  console.log('is there a token', !token);
-
   return (
     <React.Fragment>
       <Switch>
         <Route path={RouteNav.Login} component={Login} />
         <div>
           <NavBar />
-          <Route
-            path={RouteNav.TopArtists}
-            data={token}
-            component={TopArtists}
-          />
-          <Route path={RouteNav.TopTracks} data={token} component={TopTracks} />
+          <Route path={RouteNav.TopArtists} component={TopArtists} />
+          <Route path={RouteNav.TopTracks} component={TopTracks} />
           <Route path={RouteNav.Artist} component={Artist} />
           <Route path={RouteNav.Track} component={Track} />
           <Footer />

@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
+import Button from 'react-bootstrap/Button';
 
 import { Colors } from '../../colors';
 import SpinLoader from '../../components/SpinLoader/index';
-import Button from 'react-bootstrap/Button';
 
 function TopArtists() {
+  const token = localStorage.getItem('Access_Token');
   const [artistData, setArtistData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [index, setIndex] = useState(0);
@@ -16,9 +17,10 @@ function TopArtists() {
   const history = useHistory();
 
   useEffect(() => {
-    const token = localStorage.getItem('Access_Token');
-    getArtists(token);
-  }, []);
+    if (token) {
+      getArtists(token);
+    }
+  }, [token]);
 
   const getArtists = async token => {
     try {

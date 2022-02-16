@@ -13,6 +13,7 @@ import SpotifyLogo from './SpotifyLogo.png';
 //TODO Move Navbar out of components? Not sure where this should go but it's not a component
 
 function NavBar() {
+  const token = localStorage.getItem('Access_Token');
   const [userData, setUserData] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,13 +24,12 @@ function NavBar() {
   }
 
   useEffect(() => {
-    const token = localStorage.getItem('Access_Token');
     if (token) {
       getUserData(token);
     } else {
       console.log('No Token');
     }
-  }, []);
+  }, [token]);
 
   async function getUserData(token) {
     try {
