@@ -8,17 +8,17 @@ import SpinLoader from '../../components/SpinLoader';
 import Table from './TopTracksTable';
 
 function TopTracks() {
+  const token = localStorage.getItem('Access_Token');
   const [topSongs, setTopSongs] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('Access_Token');
     if (token) {
       getSongs(token);
     } else {
       console.log('No Token');
     }
-  }, []);
+  }, [token]);
 
   const getSongs = async token => {
     try {
@@ -35,8 +35,8 @@ function TopTracks() {
         setIsLoading(false);
       }
       return topSongs;
-    } catch (err) {
-      console.log('THIS IS The ERROR');
+    } catch (e) {
+      console.log('Error', e);
     }
   };
 
