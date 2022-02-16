@@ -41,8 +41,8 @@ const Artist = () => {
         setIsLoading(false);
       }
       // return artistData;
-    } catch (err) {
-      console.log('THIS IS THE ERROR');
+    } catch (e) {
+      console.log('Error', e);
     }
   };
 
@@ -74,27 +74,27 @@ const Artist = () => {
           <SpinLoader />
         ) : (
           <>
-            <Row
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-              }}
-            >
-              <Col
-                style={{
-                  padding: '2rem',
-                  borderRadius: '15px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
-              >
-                <img
-                  src={artistData?.images[1].url}
-                  style={{
-                    borderRadius: '15%',
-                  }}
-                  alt={`${artistData.name} profile art`}
-                />
+            <Row>
+              <Col>
+                <div>
+                  <div>hello</div>
+                  <div
+                    style={{
+                      padding: '2rem',
+                      borderRadius: '15px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <img
+                      src={artistData?.images[1].url}
+                      style={{
+                        borderRadius: '15%',
+                      }}
+                      alt={`${artistData.name} profile art`}
+                    />
+                  </div>
+                </div>
               </Col>
               <h1
                 style={{
