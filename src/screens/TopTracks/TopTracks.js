@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
-
 import Container from 'react-bootstrap/Container';
-// import { useHistory } from "react-router-dom";
 
 import { Colors } from '../../colors';
 import SpinLoader from '../../components/SpinLoader';
@@ -13,15 +11,12 @@ function TopTracks() {
   const [topSongs, setTopSongs] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
-  // const history = useHistory();
-
   useEffect(() => {
     const token = localStorage.getItem('Access_Token');
     if (token) {
       getSongs(token);
     } else {
-      //No token
-      console.log('No ToKen');
+      console.log('No Token');
     }
   }, []);
 
