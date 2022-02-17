@@ -41,7 +41,6 @@ function NavBar() {
         },
       });
       if (res.status === 200) {
-        console.log('SUCCESSFUL GET', res.data);
         setUserData(res?.data);
         setIsLoading(false);
       }
@@ -52,7 +51,6 @@ function NavBar() {
     return userData;
   }
 
-  console.log('Users data', userData);
   return (
     <Navbar style={styles.navbar} expand="lg">
       <Container fluid>

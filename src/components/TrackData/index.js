@@ -9,16 +9,16 @@ import DisplayButton from '../Button/index';
 
 const TrackData = ({ title, value, text }) => (
   <>
-    <div>
+    {/* <div>
       <DisplayButton
         label={title}
         onClick={() => console.log('TODO//Hover over for explination')}
       >
         {title}
       </DisplayButton>
-    </div>
+    </div> */}
     <Row>
-      <Col>
+      <Col style={{ maxWidth: '10em' }}>
         <CircularProgressbar
           value={value}
           text={text}

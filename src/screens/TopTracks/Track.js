@@ -5,9 +5,10 @@ import { useLocation } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Table from 'react-bootstrap/Table';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 import { Colors } from '../../colors';
-import TrackData from '../../components/TrackData';
 import SpinLoader from '../../components/SpinLoader';
 
 function Track() {
@@ -34,14 +35,15 @@ function Track() {
         },
       });
       if (res.status === 200) {
+        console.log('res data', res.data);
         setTrackData(res.data);
         setIsLoading(false);
         manipulateData(res.data);
         setIsLoading(false);
       }
       return trackData;
-    } catch (err) {
-      console.log('THIS IS THE ERROR');
+    } catch (e) {
+      console.log('Error getting the track', e);
     }
   };
 
@@ -121,27 +123,64 @@ function Track() {
                 </div>
               </Col>
             </Row>
-
-            <Row>
-              <Col>
-                <div
-                  style={{
-                    display: 'flex',
-                    border: `1px solid ${Colors.spotifyGreen}`,
-                    borderRadius: '15px',
-                    padding: '40px',
-                  }}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <div
+                style={{
+                  minWidth: '60%',
+                }}
+              >
+                <Table
+                  striped
+                  hover
+                  responsive="sm"
+                  variant="dark"
+                  bordered={false}
                 >
-                  {percentData?.map(item => (
-                    <TrackData
-                      title={item[0]}
-                      text={`${item[1]} %`}
-                      value={item[1]}
-                    />
-                  ))}
-                </div>
-              </Col>
-            </Row>
+                  <thead>
+                    <tr style={{ color: Colors.white }}>
+                      <th>Category</th>
+                      <th>Percent</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {percentData?.map(item => (
+                      <tr
+                        style={{
+                          color: Colors.white,
+                          fontSize: '1.5em',
+                        }}
+                      >
+                        <td
+                          style={{
+                            alignItems: 'center',
+                          }}
+                        >
+                          {item[0]}
+                        </td>
+                        <td style={{ width: '100%', height: '70px' }}>
+                          <ProgressBar
+                            striped
+                            animated
+                            now={item[1]}
+                            label={`${item[1]}%`}
+                            style={{
+                              height: '50px',
+                              fontSize: '1em',
+                              backgroundColor: Colors.spotifyGreen,
+                            }}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </div>
+            </div>
           </>
         )}
       </Container>

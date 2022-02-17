@@ -8,11 +8,11 @@ import Login from './screens/Login/Login';
 import TopArtists from './screens/TopArtists/TopArtists';
 import TopTracks from './screens/TopTracks/TopTracks';
 import NavBar from './components/NavBar';
-//TODO move to other folder for topArtists
 import Artist from './screens/TopArtists/Artist';
 import Track from './screens/TopTracks/Track';
 import Footer from './components/Footer';
 //TODO MAKE A FOOTER WITH GITHUB AND LINKEDIN
+//TODO Better error handling with error about getting songs/artists
 
 function App() {
   const [token, setToken] = useState();

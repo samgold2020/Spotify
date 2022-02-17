@@ -24,14 +24,17 @@ const ArtistTable = ({ data }) => {
       <thead>
         <tr style={{ color: Colors.white }}>
           <th></th>
+          <th></th>
           <th>Artist</th>
           <th>Song</th>
           <th>Album</th>
+          <th>Navigation</th>
         </tr>
       </thead>
       <tbody>
-        {data?.items.map(song => (
+        {data?.items.map((song, index) => (
           <tr onClick={() => handleClick(song)} style={{ color: Colors.white }}>
+            <td>{index + 1}</td>
             <td>
               <img
                 style={{ width: '40px' }}
@@ -42,6 +45,10 @@ const ArtistTable = ({ data }) => {
             <td>{song.artists[0].name}</td>
             <td>{song.name}</td>
             <td>{song.album.name}</td>
+            {/* //TO DO VIEW DETAILS BUTTON */}
+            <td>
+              <button>View Details</button>
+            </td>
           </tr>
         ))}
       </tbody>
