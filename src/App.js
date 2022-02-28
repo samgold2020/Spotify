@@ -11,7 +11,6 @@ import NavBar from './components/NavBar';
 import Artist from './screens/TopArtists/Artist';
 import Track from './screens/TopTracks/Track';
 import Footer from './components/Footer';
-//TODO MAKE A FOOTER WITH GITHUB AND LINKEDIN
 //TODO Better error handling with error about getting songs/artists
 
 function App() {

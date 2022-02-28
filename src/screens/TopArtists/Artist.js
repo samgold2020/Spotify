@@ -77,7 +77,6 @@ const Artist = () => {
             <Row>
               <Col>
                 <div>
-                  <div>hello</div>
                   <div
                     style={{
                       padding: '2rem',
