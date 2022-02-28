@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useHistory } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 
 import { Colors } from '../../colors';
 
@@ -45,9 +46,18 @@ const ArtistTable = ({ data }) => {
             <td>{song.artists[0].name}</td>
             <td>{song.name}</td>
             <td>{song.album.name}</td>
-            {/* //TO DO VIEW DETAILS BUTTON */}
             <td>
-              <button>View Details</button>
+              <Button
+                style={{
+                  backgroundColor: 'transparent',
+                  borderColor: Colors.spotifyGreen,
+                  color: Colors.white,
+                  marginRight: '20px',
+                  fontWeight: '600',
+                }}
+              >
+                Song Details
+              </Button>
             </td>
           </tr>
         ))}

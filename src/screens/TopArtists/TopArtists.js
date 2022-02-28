@@ -120,6 +120,7 @@ function TopArtists() {
                         borderColor: Colors.spotifyGreen,
                         color: Colors.lightGrey,
                         marginRight: '20px',
+                        fontSize: '1.5em',
                       }}
                       size="lg"
                       variant="primary"
@@ -127,12 +128,14 @@ function TopArtists() {
                         handleSubmit(item);
                       }}
                     >
-                      View Artist
+                      Artist Details
                     </Button>
                     <Button
                       style={{
                         backgroundColor: Colors.darkGrey,
                         color: Colors.spotifyGreen,
+                        borderColor: Colors.darkGrey,
+                        fontSize: '1.5em',
                       }}
                       size="lg"
                       variant="outline-secondary"
