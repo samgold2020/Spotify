@@ -15,6 +15,8 @@ function Track() {
   const [trackData, setTrackData] = useState('');
   const [percentData, setPercentData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [keySignature, setKeySignature] = useState();
+  const [mode, setMode] = useState();
 
   const location = useLocation();
 
@@ -35,11 +37,16 @@ function Track() {
         },
       });
       if (res.status === 200) {
-        console.log('res data', res.data);
         setTrackData(res.data);
         setIsLoading(false);
         manipulateData(res.data);
         setIsLoading(false);
+        readableKeySignature(res.data.key);
+        if (res?.data?.mode === 1) {
+          setMode('Major');
+        } else {
+          setMode('Minor');
+        }
       }
       return trackData;
     } catch (e) {
@@ -69,8 +76,32 @@ function Track() {
     setPercentData(percentDataArr);
   };
 
-  console.log('yo', percentData);
+  const readableKeySignature = keyIndexSpotify => {
+    const keyData = {
+      0: 'C',
+      1: 'C#/Db',
+      2: 'D',
+      3: 'D#/Eb',
+      4: 'E',
+      5: 'F',
+      6: 'F#/Gb',
+      7: 'G',
+      8: 'G#/Ab',
+      9: 'A',
+      10: 'A#/Bb',
+      11: 'B',
+    };
 
+    Object.entries(keyData).map(([k, v]) => {
+      if (k === keyIndexSpotify.toString()) {
+        setKeySignature(v);
+      } else if (keyIndexSpotify === -1) {
+        setKeySignature('No key signuatre detectable');
+      }
+    });
+  };
+
+  console.log('Track Data', trackData, mode);
   return (
     <div style={{ backgroundColor: Colors.darkGrey, minHeight: '100vh' }}>
       <Container fluid>
@@ -123,15 +154,42 @@ function Track() {
                 </div>
               </Col>
             </Row>
+            <Row>
+              <Col
+                style={{
+                  padding: '2rem',
+                  borderRadius: '15px',
+                  display: 'flex',
+                  justifyContent: 'space-around',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                }}
+              >
+                <div
+                  style={{
+                    color: Colors.spotifyGreen,
+                    fontSize: '3em',
+                  }}
+                >
+                  {`Key: ${keySignature} ${mode}`}
+                </div>
+                {/* //TODO Round up so no decimal */}
+                <div style={{ color: Colors.spotifyGreen, fontSize: '3em' }}>
+                  {`Tempo: ${trackData.tempo} BPM`}
+                </div>
+                {/* //TODO add duration */}
+              </Col>
+            </Row>
             <div
               style={{
                 display: 'flex',
-                justifyContent: 'center',
+                // justifyContent: 'center',
+                marginLeft: '5%',
               }}
             >
               <div
                 style={{
-                  minWidth: '60%',
+                  minWidth: '40%',
                 }}
               >
                 <Table
@@ -144,7 +202,7 @@ function Track() {
                   <thead>
                     <tr style={{ color: Colors.white }}>
                       <th>Category</th>
-                      <th>Percent</th>
+                      <th>Percent %</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -171,7 +229,6 @@ function Track() {
                             style={{
                               height: '50px',
                               fontSize: '1em',
-                              backgroundColor: Colors.spotifyGreen,
                             }}
                           />
                         </td>
