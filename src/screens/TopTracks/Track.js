@@ -36,6 +36,7 @@ function Track() {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log('Song data', res);
       if (res.status === 200) {
         setTrackData(res.data);
         setIsLoading(false);
@@ -101,7 +102,12 @@ function Track() {
     });
   };
 
-  console.log('Track Data', trackData, mode);
+  function millisToMinutesAndSeconds(millis) {
+    let minutes = Math.floor(millis / 60000);
+    let seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+  }
+
   return (
     <div style={{ backgroundColor: Colors.darkGrey, minHeight: '100vh' }}>
       <Container fluid>
@@ -167,17 +173,43 @@ function Track() {
               >
                 <div
                   style={{
+                    border: `1px solid ${Colors.spotifyGreen}`,
+                    padding: '10px',
+                    borderRadius: '15px',
                     color: Colors.spotifyGreen,
+                    backgroundColor: Colors.lightGrey,
                     fontSize: '3em',
                   }}
                 >
                   {`Key: ${keySignature} ${mode}`}
                 </div>
                 {/* //TODO Round up so no decimal */}
-                <div style={{ color: Colors.spotifyGreen, fontSize: '3em' }}>
+                <div
+                  style={{
+                    border: `1px solid ${Colors.spotifyGreen}`,
+                    padding: '10px',
+                    borderRadius: '15px',
+                    color: Colors.spotifyGreen,
+                    backgroundColor: Colors.lightGrey,
+                    fontSize: '3em',
+                  }}
+                >
                   {`Tempo: ${trackData.tempo} BPM`}
                 </div>
-                {/* //TODO add duration */}
+                <div
+                  style={{
+                    border: `1px solid ${Colors.spotifyGreen}`,
+                    padding: '10px',
+                    borderRadius: '15px',
+                    color: Colors.spotifyGreen,
+                    backgroundColor: Colors.lightGrey,
+                    fontSize: '3em',
+                  }}
+                >
+                  {`Duration: ${millisToMinutesAndSeconds(
+                    trackData.duration_ms,
+                  )}`}
+                </div>
               </Col>
             </Row>
             <div
