@@ -32,11 +32,17 @@ export default function Login() {
         >
           <h1
             class="animate__animated animate__bounce"
-            style={{ fontSize: '4rem', color: Colors.spotifyGreen }}
+            style={{ fontSize: '8rem', color: Colors.spotifyGreen }}
           >
             Spotify Tops
           </h1>
-          <h2 style={{ fontSize: '1.5rem', color: Colors.spotifyGreen }}>
+          <h2
+            style={{
+              fontSize: '2rem',
+              color: Colors.spotifyGreen,
+              marginBottom: '2%',
+            }}
+          >
             Explore your favorite songs and artists
           </h2>
           <DisplayButton
