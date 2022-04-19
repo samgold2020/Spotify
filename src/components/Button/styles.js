@@ -1,18 +1,20 @@
 import { Colors } from '../../colors';
 
 const styles = {
-  buttonPrimary: {
-    backgroundColor: Colors.spotifyGreen,
+  buttonPrimary: hoverPrimary => ({
+    backgroundColor: hoverPrimary ? Colors.lightGrey : Colors.spotifyGreen,
     borderColor: Colors.spotifyGreen,
-    color: Colors.lightGrey,
-    fontSize: '1em',
-  },
-  secondaryButton: {
-    backgroundColor: Colors.lightGrey,
+    color: hoverPrimary ? Colors.spotifyGreen : Colors.lightGrey,
+    borderColor: Colors.spotifyGreen,
+    fontSize: '1.5em',
+  }),
+  buttonSecondary: hoverSecondary => ({
+    backgroundColor: hoverSecondary ? Colors.spotifyGreen : Colors.lightGrey,
     borderColor: Colors.lightGrey,
-    color: Colors.spotifyGreen,
-    fontSize: '1em',
-  },
+    color: hoverSecondary ? Colors.lightGrey : Colors.spotifyGreen,
+    borderColor: Colors.spotifyGreen,
+    fontSize: '1.5em',
+  }),
 };
 
 export default styles;
