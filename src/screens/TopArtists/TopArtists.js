@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
-import Button from 'react-bootstrap/Button';
 
 import { Colors } from '../../colors';
 import SpinLoader from '../../components/SpinLoader/index';
+import DisplayButton from '../../components/Button';
 
 function TopArtists() {
   const token = localStorage.getItem('Access_Token');
@@ -72,24 +72,17 @@ function TopArtists() {
           <Carousel activeIndex={index} onSelect={handleSelect}>
             {artistData?.map((item, index) => (
               <Carousel.Item>
-                <div
+                <h1
                   style={{
-                    display: 'flex',
-                    justifyContent: 'center',
+                    color: Colors.spotifyGreen,
+                    fontSize: '3rem',
+                    fontWeight: 700,
+                    textAlign: 'center',
                     margin: '15px',
                   }}
                 >
-                  <h1
-                    style={{
-                      color: Colors.spotifyGreen,
-                      fontSize: '3rem',
-                      fontWeight: 700,
-                      textAlign: 'center',
-                    }}
-                  >
-                    {item.name}
-                  </h1>
-                </div>
+                  {item.name}
+                </h1>
                 <div
                   style={{
                     display: 'flex',
@@ -100,6 +93,7 @@ function TopArtists() {
                   <img
                     style={{
                       borderRadius: '15px',
+                      maxHeight: '600px',
                     }}
                     class="img-fluid"
                     src={item?.images[0].url}
@@ -107,44 +101,23 @@ function TopArtists() {
                   />
                 </div>
                 <Carousel.Caption>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <Button
-                      style={{
-                        backgroundColor: Colors.spotifyGreen,
-                        borderColor: Colors.spotifyGreen,
-                        color: Colors.lightGrey,
-                        marginRight: '20px',
-                        fontSize: '1.5em',
-                      }}
-                      size="lg"
-                      variant="primary"
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <DisplayButton
+                      label={'Artist Details'}
+                      primary={false}
                       onClick={() => {
                         handleSubmit(item);
                       }}
-                    >
-                      Artist Details
-                    </Button>
-                    <Button
-                      style={{
-                        backgroundColor: Colors.darkGrey,
-                        color: Colors.spotifyGreen,
-                        borderColor: Colors.darkGrey,
-                        fontSize: '1.5em',
-                      }}
-                      size="lg"
-                      variant="outline-secondary"
-                      onClick={() => {
-                        openSpotify(item.external_urls.spotify);
-                      }}
-                    >
-                      Open in Spotify
-                    </Button>
+                    />
+                    <div style={{ marginLeft: '10px' }}>
+                      <DisplayButton
+                        label={'Open in Spotify'}
+                        primary={false}
+                        onClick={() => {
+                          openSpotify(item.external_urls.spotify);
+                        }}
+                      />
+                    </div>
                   </div>
                 </Carousel.Caption>
               </Carousel.Item>
