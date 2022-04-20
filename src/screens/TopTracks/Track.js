@@ -20,7 +20,6 @@ function Track() {
 
   useEffect(() => {
     viewTrack(location.state.detail);
-    // getArtistsDetails(location.state.detail);
   }, []);
 
   const viewTrack = async trackId => {

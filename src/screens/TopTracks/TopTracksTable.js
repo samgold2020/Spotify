@@ -10,6 +10,7 @@ const ArtistTable = ({ data }) => {
   const history = useHistory();
 
   const handleClick = song => {
+    console.log('SONG', song);
     history.push({
       pathname: '/viewtrack',
       state: {

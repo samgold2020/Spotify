@@ -6,7 +6,6 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { Colors } from '../../colors';
 import SpinLoader from '../../components/SpinLoader/index';
 import styles from './styles';
 
@@ -22,7 +21,6 @@ const Artist = () => {
 
   useEffect(() => {
     viewArtist(location.state.detail);
-    // getArtistsDetails(location.state.detail);
   }, []);
 
   const viewArtist = async artistId => {
@@ -37,7 +35,6 @@ const Artist = () => {
         },
       });
       if (res.status === 200) {
-        // console.log('SUCCESSFUL GET', res?.data);
         setArtistData(res?.data);
         setIsLoading(false);
       }
