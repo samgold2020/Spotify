@@ -2,9 +2,9 @@ import React from 'react';
 
 import { useHistory } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
 
 import { Colors } from '../../colors';
+import DisplayButton from '../../components/Button';
 
 const ArtistTable = ({ data }) => {
   const history = useHistory();
@@ -34,11 +34,11 @@ const ArtistTable = ({ data }) => {
       </thead>
       <tbody>
         {data?.items.map((song, index) => (
-          <tr onClick={() => handleClick(song)} style={{ color: Colors.white }}>
+          <tr style={{ color: Colors.white }}>
             <td>{index + 1}</td>
             <td>
               <img
-                style={{ width: '40px' }}
+                style={{ width: '60px' }}
                 src={song.album.images[2].url}
                 alt={`${song.artists[0].name} Album Art`}
               />
@@ -47,17 +47,11 @@ const ArtistTable = ({ data }) => {
             <td>{song.name}</td>
             <td>{song.album.name}</td>
             <td>
-              <Button
-                style={{
-                  backgroundColor: 'transparent',
-                  borderColor: Colors.spotifyGreen,
-                  color: Colors.white,
-                  marginRight: '20px',
-                  fontWeight: '600',
-                }}
-              >
-                Song Details
-              </Button>
+              <DisplayButton
+                onClick={() => handleClick(song)}
+                primary={false}
+                label={'Discover'}
+              />
             </td>
           </tr>
         ))}
