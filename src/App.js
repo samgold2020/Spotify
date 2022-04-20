@@ -11,6 +11,7 @@ import NavBar from './components/NavBar';
 import Artist from './screens/TopArtists/Artist';
 import Track from './screens/TopTracks/Track';
 import Footer from './components/Footer';
+import { Colors } from './colors';
 //TODO Better error handling with error about getting songs/artists
 
 function App() {
@@ -51,7 +52,7 @@ function App() {
     <React.Fragment>
       <Switch>
         <Route path={RouteNav.Login} component={Login} />
-        <div>
+        <div style={{ backgroundColor: Colors.darkGrey }}>
           <NavBar />
           <Route path={RouteNav.TopArtists} component={TopArtists} />
           <Route path={RouteNav.TopTracks} component={TopTracks} />
