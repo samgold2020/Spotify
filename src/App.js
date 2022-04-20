@@ -48,17 +48,17 @@ function App() {
 
   return (
     <React.Fragment>
-      <Switch>
-        <Route path={RouteNav.Login} component={Login} />
-        <div style={{ backgroundColor: Colors.darkGrey }}>
-          <NavBar />
+      <NavBar />
+      <div style={{ backgroundColor: Colors.darkGrey }}>
+        <Switch>
+          <Route path={RouteNav.Login} component={Login} />
           <Route path={RouteNav.TopArtists} component={TopArtists} />
           <Route path={RouteNav.TopTracks} component={TopTracks} />
           <Route path={RouteNav.Artist} component={Artist} />
           <Route path={RouteNav.Track} component={Track} />
-          <Footer />
-        </div>
-      </Switch>
+        </Switch>
+        <Footer />
+      </div>
     </React.Fragment>
   );
 }
