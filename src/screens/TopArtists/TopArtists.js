@@ -19,6 +19,8 @@ function TopArtists() {
   useEffect(() => {
     if (token) {
       getArtists(token);
+    } else {
+      console.log('There is no token');
     }
   }, [token]);
 
@@ -73,6 +75,7 @@ function TopArtists() {
             {artistData?.map((item, index) => (
               <Carousel.Item>
                 <h1
+                  key={index}
                   style={{
                     color: Colors.spotifyGreen,
                     fontSize: '3rem',
@@ -81,7 +84,7 @@ function TopArtists() {
                     margin: '15px',
                   }}
                 >
-                  {item.name}
+                  <span>{`${index + 1}.`} </span> {item.name}
                 </h1>
                 <div
                   style={{
