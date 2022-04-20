@@ -5,8 +5,6 @@ import { useLocation } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Table from 'react-bootstrap/Table';
-import ProgressBar from 'react-bootstrap/ProgressBar';
 
 import { Colors } from '../../colors';
 import SpinLoader from '../../components/SpinLoader';
@@ -70,7 +68,7 @@ function Track() {
 
     Object.entries(trackData)?.map(([key, value]) => {
       if (displayPercentData?.includes(key)) {
-        let percent = (value * 100).toFixed(2);
+        let percent = (value * 100).toFixed(0);
         percentDataArr.push([key, percent]);
       }
     });
@@ -108,6 +106,7 @@ function Track() {
     return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
   }
 
+  console.log('percent data', percentData);
   return (
     <div style={{ backgroundColor: Colors.darkGrey, minHeight: '100vh' }}>
       <Container fluid>
@@ -183,7 +182,6 @@ function Track() {
                 >
                   {`Key: ${keySignature} ${mode}`}
                 </div>
-                {/* //TODO Round up so no decimal */}
                 <div
                   style={{
                     border: `1px solid ${Colors.spotifyGreen}`,
@@ -212,63 +210,36 @@ function Track() {
                 </div>
               </Col>
             </Row>
+
             <div
               style={{
                 display: 'flex',
-                // justifyContent: 'center',
-                marginLeft: '5%',
+                justifyContent: 'space-around',
+                overflow: 'scroll',
               }}
             >
-              <div
-                style={{
-                  minWidth: '40%',
-                }}
-              >
-                <Table
-                  striped
-                  hover
-                  responsive="sm"
-                  variant="dark"
-                  bordered={false}
+              {percentData?.map(item => (
+                <div
+                  style={{
+                    display: 'flex',
+                    border: `3px solid ${Colors.spotifyGreen}`,
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    padding: '10px',
+                    borderRadius: '50%',
+                    minWidth: '200px',
+                    minHeight: '200px',
+                    color: Colors.spotifyGreen,
+                    backgroundColor: Colors.lightGrey,
+                    fontSize: '1.5em',
+                    justifyContent: 'center',
+                    marginTop: '5%',
+                  }}
                 >
-                  <thead>
-                    <tr style={{ color: Colors.white }}>
-                      <th>Category</th>
-                      <th>Percent %</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {percentData?.map(item => (
-                      <tr
-                        style={{
-                          color: Colors.white,
-                          fontSize: '1.5em',
-                        }}
-                      >
-                        <td
-                          style={{
-                            alignItems: 'center',
-                          }}
-                        >
-                          {item[0]}
-                        </td>
-                        <td style={{ width: '100%', height: '70px' }}>
-                          <ProgressBar
-                            striped
-                            animated
-                            now={item[1]}
-                            label={`${item[1]}%`}
-                            style={{
-                              height: '50px',
-                              fontSize: '1em',
-                            }}
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              </div>
+                  {item[0]}
+                  <span style={{ marginLeft: '10px' }}>{`${item[1]}%`}</span>
+                </div>
+              ))}
             </div>
           </>
         )}
