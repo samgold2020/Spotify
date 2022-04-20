@@ -4,9 +4,9 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 
-import { Colors } from '../../colors';
 import SpinLoader from '../../components/SpinLoader/index';
 import DisplayButton from '../../components/Button';
+import styles from './styles';
 
 function TopArtists() {
   const token = localStorage.getItem('Access_Token');
@@ -60,13 +60,7 @@ function TopArtists() {
   }
 
   return (
-    <div
-      style={{
-        backgroundColor: Colors.darkGrey,
-        width: '100vw',
-        height: '100vh',
-      }}
-    >
+    <div style={styles.pageBackground}>
       {isLoading ? (
         <SpinLoader />
       ) : (
@@ -74,37 +68,24 @@ function TopArtists() {
           <Carousel activeIndex={index} onSelect={handleSelect}>
             {artistData?.map((item, index) => (
               <Carousel.Item>
-                <h1
-                  key={index}
-                  style={{
-                    color: Colors.spotifyGreen,
-                    fontSize: '3rem',
-                    fontWeight: 700,
-                    textAlign: 'center',
-                    margin: '15px',
-                  }}
-                >
+                <h1 key={index} style={styles.h1}>
                   <span>{`${index + 1}.`} </span> {item.name}
                 </h1>
                 <div
                   style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    backgroundColor: Colors.lightGrey,
+                    ...styles.centerContent,
+                    ...styles.lightBackground,
                   }}
                 >
                   <img
-                    style={{
-                      borderRadius: '15px',
-                      maxHeight: '600px',
-                    }}
+                    style={styles.carouselImage}
                     className="img-fluid"
                     src={item?.images[0].url}
                     alt={`${item.name} album art`}
                   />
                 </div>
                 <Carousel.Caption>
-                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <div style={styles.centerContent}>
                     <DisplayButton
                       label={'Artist Details'}
                       primary={false}

@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 
 import { Colors } from '../../colors';
 import SpinLoader from '../../components/SpinLoader/index';
+import styles from './styles';
 
 const Artist = () => {
   const [artistData, setArtistData] = useState();
@@ -68,7 +69,7 @@ const Artist = () => {
   }, []);
 
   return (
-    <div style={{ backgroundColor: Colors.darkGrey, minHeight: '100vh' }}>
+    <div style={styles.pageBackground}>
       <Container fluid>
         {isLoading ? (
           <SpinLoader />
@@ -76,57 +77,20 @@ const Artist = () => {
           <>
             <Row>
               <Col>
-                <div>
-                  <div
-                    style={{
-                      padding: '2rem',
-                      borderRadius: '15px',
-                      display: 'flex',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <img
-                      src={artistData?.images[1].url}
-                      style={{
-                        borderRadius: '15%',
-                      }}
-                      alt={`${artistData?.name} profile art`}
-                    />
-                  </div>
+                <div style={{ ...styles.centerContent, ...styles.padding }}>
+                  <img
+                    src={artistData?.images[1].url}
+                    style={styles.image}
+                    alt={`${artistData?.name} profile art`}
+                  />
                 </div>
               </Col>
-              <h1
-                style={{
-                  fontSize: '5rem',
-                  fontWeight: '700',
-                  color: Colors.spotifyGreen,
-                  textAlign: 'center',
-                }}
-              >
-                {artistData?.name}
-              </h1>
-
-              <p style={{ color: Colors.white, textAlign: 'center' }}>
-                {displayGenre()}
-              </p>
+              <h1 style={styles.h1}>{artistData?.name}</h1>
+              <p style={styles.p}>{displayGenre()}</p>
             </Row>
 
-            <Row
-              style={{
-                padding: '40px',
-              }}
-            >
-              <Col
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  border: `1px solid ${Colors.spotifyGreen}`,
-                  color: Colors.white,
-                  padding: '40px',
-                  fontSize: '1.5rem',
-                  borderRadius: '15px',
-                }}
-              >
+            <Row style={styles.padding}>
+              <Col style={styles.paragraphBorder}>
                 <div>{wickiContent}</div>
               </Col>
             </Row>
