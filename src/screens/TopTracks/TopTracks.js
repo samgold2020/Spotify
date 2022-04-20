@@ -16,7 +16,7 @@ function TopTracks() {
     if (token) {
       getSongs(token);
     } else {
-      console.log('No Token');
+      console.log('There is no token');
     }
   }, [token]);
 
