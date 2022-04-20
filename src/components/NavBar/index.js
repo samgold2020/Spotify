@@ -45,7 +45,7 @@ function NavBar() {
       }
       return userData;
     } catch (err) {
-      console.log('Error', err);
+      signOut();
     }
     return userData;
   }
