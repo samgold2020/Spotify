@@ -34,7 +34,6 @@ function Track() {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log('Song data', res);
       if (res.status === 200) {
         setTrackData(res.data);
         setIsLoading(false);
@@ -69,7 +68,7 @@ function Track() {
     Object.entries(trackData)?.map(([key, value]) => {
       if (displayPercentData?.includes(key)) {
         let percent = (value * 100).toFixed(0);
-        percentDataArr.push([key, percent]);
+        return percentDataArr.push([key, percent]);
       }
     });
     setPercentData(percentDataArr);
@@ -93,9 +92,9 @@ function Track() {
 
     Object.entries(keyData).map(([k, v]) => {
       if (k === keyIndexSpotify.toString()) {
-        setKeySignature(v);
+        return setKeySignature(v);
       } else if (keyIndexSpotify === -1) {
-        setKeySignature('No key signuatre detectable');
+        return setKeySignature('No key signuatre detectable');
       }
     });
   };

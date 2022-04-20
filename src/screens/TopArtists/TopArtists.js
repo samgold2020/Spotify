@@ -98,7 +98,7 @@ function TopArtists() {
                       borderRadius: '15px',
                       maxHeight: '600px',
                     }}
-                    class="img-fluid"
+                    className="img-fluid"
                     src={item?.images[0].url}
                     alt={`${item.name} album art`}
                   />

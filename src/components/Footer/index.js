@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { AiOutlineGithub, AiFillLinkedin } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
 
 import { Colors } from '../../colors';
 //TODO Move Navbar out of components? Not sure where this should go but it's not a component

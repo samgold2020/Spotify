@@ -30,7 +30,6 @@ function TopTracks() {
         },
       });
       if (res.status === 200) {
-        console.log('Response', res.data);
         setTopSongs(res.data);
         setIsLoading(false);
       }

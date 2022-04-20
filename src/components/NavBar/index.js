@@ -10,15 +10,13 @@ import UserDropdown from '../DropdownMenu';
 import SpinLoader from '../SpinLoader';
 import SpotifyLogo from './SpotifyLogo.png';
 
-//TODO Move Navbar out of components? Not sure where this should go but it's not a component
-
 function NavBar() {
   const token = localStorage.getItem('Access_Token');
   const [userData, setUserData] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
+  /*signOut function clears local storage and redirects the user to the login page*/
   function signOut() {
-    //Clear out local storage and navigate back to login screen
     localStorage.clear();
     console.log(' logged out successfully' + window.status);
     window.location.href = 'http://localhost:3000/login';

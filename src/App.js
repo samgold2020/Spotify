@@ -12,10 +12,9 @@ import Artist from './screens/TopArtists/Artist';
 import Track from './screens/TopTracks/Track';
 import Footer from './components/Footer';
 import { Colors } from './colors';
-//TODO Better error handling with error about getting songs/artists
 
 function App() {
-  const [token, setToken] = useState();
+  const [token, setToken] = useState('');
 
   const getAuthParams = hash => {
     //hash is the URL (window.location.hash)?? Which is everything after the has "#"??
@@ -40,13 +39,12 @@ function App() {
       const { access_token, expires_in, token_type } = getAuthParams(
         window.location.hash,
       );
-      // localStorage.clear();
       localStorage.setItem('Access_Token', access_token);
       localStorage.setItem('Token_Type', token_type);
       localStorage.setItem('Expiers_In', expires_in);
+      setToken(access_token);
     }
-    setToken(localStorage.getItem('Access_Token'));
-  }, []);
+  }, [token]);
 
   return (
     <React.Fragment>
