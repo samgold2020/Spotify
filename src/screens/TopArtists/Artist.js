@@ -8,16 +8,16 @@ import Col from 'react-bootstrap/Col';
 
 import SpinLoader from '../../components/SpinLoader/index';
 import styles from './styles';
+import useWicki from '../../hooks/UseWicki';
 
 const Artist = () => {
   const [artistData, setArtistData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [wickiContent, setWickiContent] = useState([]);
 
   const location = useLocation();
 
   const artistName = location.state.name;
-  const url = `https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=${artistName}`;
+  const wickiContent = useWicki(artistName);
 
   useEffect(() => {
     viewArtist(location.state.detail);
@@ -49,22 +49,6 @@ const Artist = () => {
     return artistData?.genres.toString().split(',').join(', ');
   };
 
-  const getWickiArtistContent = async () => {
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        const { pages } = data.query;
-        setWickiContent(Object.keys(pages).map(id => pages[id].extract));
-        setIsLoading(false);
-      })
-      .catch(e => console.log(e));
-  };
-  console.log('content from Wicik', wickiContent.length);
-
-  useEffect(() => {
-    getWickiArtistContent();
-  }, []);
-
   return (
     <div style={styles.pageBackground}>
       <Container fluid>
@@ -84,6 +68,9 @@ const Artist = () => {
               </Col>
               <h1 style={styles.h1}>{artistData?.name}</h1>
               <p style={styles.p}>{displayGenre()}</p>
+              <p
+                style={styles.p}
+              >{`Followers: ${artistData?.followers.total}`}</p>
             </Row>
 
             <Row style={styles.padding}>
