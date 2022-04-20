@@ -90,7 +90,7 @@ const Artist = () => {
                       style={{
                         borderRadius: '15%',
                       }}
-                      alt={`${artistData.name} profile art`}
+                      alt={`${artistData?.name} profile art`}
                     />
                   </div>
                 </div>

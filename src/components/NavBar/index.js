@@ -18,6 +18,7 @@ function NavBar() {
   const [isLoading, setIsLoading] = useState(true);
 
   function signOut() {
+    //Clear out local storage and navigate back to login screen
     localStorage.clear();
     console.log(' logged out successfully' + window.status);
     window.location.href = 'http://localhost:3000/login';
@@ -27,7 +28,7 @@ function NavBar() {
     if (token) {
       getUserData(token);
     } else {
-      console.log('No Token');
+      console.log('There is no token');
     }
   }, [token]);
 

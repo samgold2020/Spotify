@@ -31,7 +31,7 @@ export default function Login() {
           }}
         >
           <h1
-            class="animate__animated animate__bounce"
+            className="animate__animated animate__bounce"
             style={{ fontSize: '8rem', color: Colors.spotifyGreen }}
           >
             Spotify Tops
