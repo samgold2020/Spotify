@@ -17,7 +17,7 @@ const ArtistTable = ({ data }) => {
         detail: song.id,
         artist: song.artists[0].name,
         title: song.name,
-        art: song.album.images[2].url,
+        art: song.album.images[0].url,
       },
     });
   };
@@ -39,7 +39,6 @@ const ArtistTable = ({ data }) => {
             <td>{index + 1}</td>
             <td>
               <img
-                style={{ width: '60px' }}
                 src={song.album.images[2].url}
                 alt={`${song.artists[0].name} Album Art`}
               />
