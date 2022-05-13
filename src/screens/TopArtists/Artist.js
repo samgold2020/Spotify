@@ -12,12 +12,11 @@ import useWicki from '../../hooks/UseWicki';
 
 const Artist = () => {
   const [artistData, setArtistData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
 
   const location = useLocation();
 
   const artistName = location.state.name;
-  const wickiContent = useWicki(artistName);
+  const { wickiContent, isLoading } = useWicki(artistName);
 
   useEffect(() => {
     viewArtist(location.state.detail);
@@ -36,7 +35,6 @@ const Artist = () => {
       });
       if (res.status === 200) {
         setArtistData(res?.data);
-        setIsLoading(false);
       }
       // return artistData;
     } catch (e) {
@@ -74,9 +72,7 @@ const Artist = () => {
             </Row>
 
             <Row style={styles.padding}>
-              <Col style={styles.paragraphBorder}>
-                <div>{wickiContent}</div>
-              </Col>
+              <Col style={styles.paragraphBorder}>{wickiContent}</Col>
             </Row>
           </>
         )}
