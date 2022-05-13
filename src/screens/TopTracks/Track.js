@@ -17,6 +17,7 @@ function Track() {
   const [mode, setMode] = useState();
 
   const location = useLocation();
+  console.log('location', location);
 
   useEffect(() => {
     viewTrack(location.state.detail);
@@ -104,107 +105,66 @@ function Track() {
     return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
   }
 
-  console.log('percent data', percentData);
+  const displaySongInformation = item => {
+    console.log('ITEM', item);
+    return `${item} HELLO HELLOOOO`;
+  };
+
   return (
-    <div style={{ backgroundColor: Colors.darkGrey, minHeight: '100vh' }}>
+    <div
+      style={{
+        backgroundColor: Colors.darkGrey,
+        minHeight: '100vh',
+      }}
+    >
       <Container fluid>
         {isLoading ? (
           <SpinLoader />
         ) : (
           <>
-            <Row
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-              }}
-            >
-              <Col
-                style={{
-                  padding: '2rem',
-                  borderRadius: '15px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'column',
-                }}
-              >
-                <h1
-                  style={{
-                    fontSize: '5rem',
-                    fontWeight: '700',
-                    color: Colors.spotifyGreen,
-                  }}
-                >
-                  {location.state.title}
-                </h1>
-                <div
-                  style={{
-                    fontSize: '3rem',
-                    fontWeight: '700',
-                    color: Colors.spotifyGreen,
-                  }}
-                >
-                  By
-                </div>
-                <div
-                  style={{
-                    fontSize: '4rem',
-                    fontWeight: '700',
-                    color: Colors.spotifyGreen,
-                  }}
-                >
-                  {location.state.artist}
-                </div>
-              </Col>
-            </Row>
             <Row>
               <Col
                 style={{
-                  padding: '2rem',
-                  borderRadius: '15px',
+                  paddingTop: '2rem',
                   display: 'flex',
-                  justifyContent: 'space-around',
+                  flexDirection: 'column',
                   alignItems: 'center',
-                  flexDirection: 'row',
+                  color: Colors.spotifyGreen,
                 }}
               >
-                <div
+                <img
                   style={{
-                    border: `1px solid ${Colors.spotifyGreen}`,
-                    padding: '10px',
                     borderRadius: '15px',
+                    maxHeight: '350px',
+                  }}
+                  src={location.state.art}
+                  alt={`${location.state.title} by ${location.state.artist}`}
+                />
+                <h1
+                  style={{
                     color: Colors.spotifyGreen,
-                    backgroundColor: Colors.lightGrey,
-                    fontSize: '3em',
+                    fontSize: '3rem',
+                    fontWeight: 700,
+                    textAlign: 'center',
+                    margin: '15px',
                   }}
                 >
-                  {`Key: ${keySignature} ${mode}`}
-                </div>
+                  {`${location.state.title} - ${location.state.artist}`}
+                </h1>
                 <div
                   style={{
-                    border: `1px solid ${Colors.spotifyGreen}`,
-                    padding: '10px',
-                    borderRadius: '15px',
-                    color: Colors.spotifyGreen,
-                    backgroundColor: Colors.lightGrey,
-                    fontSize: '3em',
+                    display: 'flex',
+                    width: '25%',
+                    justifyContent: 'space-evenly',
+                    fontSize: '1em',
+                    color: Colors.white,
                   }}
                 >
-                  {`Tempo: ${trackData.tempo} BPM`}
-                </div>
-                <div
-                  style={{
-                    border: `1px solid ${Colors.spotifyGreen}`,
-                    padding: '10px',
-                    borderRadius: '15px',
-                    color: Colors.spotifyGreen,
-                    backgroundColor: Colors.lightGrey,
-                    fontSize: '3em',
-                  }}
-                >
-                  {`Duration: ${millisToMinutesAndSeconds(
+                  <p>{`Key: ${keySignature} ${mode}`}</p>
+                  <p>{`Duration: ${millisToMinutesAndSeconds(
                     trackData.duration_ms,
-                  )}`}
+                  )}`}</p>
+                  <p> {`Tempo: ${Math.round(trackData.tempo)} BPM`}</p>
                 </div>
               </Col>
             </Row>
@@ -214,16 +174,22 @@ function Track() {
                 display: 'flex',
                 justifyContent: 'space-around',
                 overflow: 'scroll',
+                backgroundColor: Colors.lightGrey,
+                borderRadius: '15px',
+                padding: '20px',
               }}
             >
               {percentData?.map(item => (
                 <div
+                  onClick={() => {
+                    console.log('item that was clicked', item);
+                    displaySongInformation(item);
+                  }}
                   style={{
                     display: 'flex',
                     border: `3px solid ${Colors.spotifyGreen}`,
                     flexDirection: 'column',
                     alignItems: 'center',
-                    padding: '10px',
                     borderRadius: '50%',
                     minWidth: '200px',
                     minHeight: '200px',
@@ -231,7 +197,7 @@ function Track() {
                     backgroundColor: Colors.lightGrey,
                     fontSize: '1.5em',
                     justifyContent: 'center',
-                    marginTop: '5%',
+                    marginLeft: '20px',
                   }}
                 >
                   {item[0]}
@@ -239,6 +205,20 @@ function Track() {
                 </div>
               ))}
             </div>
+            {/* TODO Add Song Player */}
+            {displaySongInformation()}
+            <Row>
+              <Col
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginTop: '2%',
+                  color: Colors.spotifyGreen,
+                }}
+              >
+                <h1>PLAYER COMING SOON</h1>
+              </Col>
+            </Row>
           </>
         )}
       </Container>
