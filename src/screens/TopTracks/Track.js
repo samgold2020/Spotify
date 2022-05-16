@@ -6,18 +6,21 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Alert from 'react-bootstrap/Alert';
 
 import { Colors } from '../../colors';
 import SpinLoader from '../../components/SpinLoader';
 import styles from './styles';
+import DisplayButton from '../../components/Button';
 
 function Track() {
   const [trackData, setTrackData] = useState('');
-  const [percentData, setPercentData] = useState();
+  const [percentData, setPercentData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [keySignature, setKeySignature] = useState();
-  const [mode, setMode] = useState();
-  const [buttonClick, setButtonClick] = useState(false);
+  const [keySignature, setKeySignature] = useState('');
+  const [mode, setMode] = useState('');
+
+  const [showData, setShowData] = useState('');
 
   const location = useLocation();
   console.log('location', location);
@@ -41,7 +44,6 @@ function Track() {
         setTrackData(res.data);
         setIsLoading(false);
         manipulateData(res.data);
-        setIsLoading(false);
         readableKeySignature(res.data.key);
         if (res?.data?.mode === 1) {
           setMode('Major');
@@ -109,9 +111,51 @@ function Track() {
   }
 
   const displaySongInformation = item => {
+    const displayPercentData = [
+      {
+        id: 'acousticness',
+        percentScore: `${item[1]}% `,
+        details: ` A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 1.0 represents high confidence the track is acoustic.`,
+      },
+      {
+        id: 'danceability',
+        percentScore: `${item[1]}% `,
+        details:
+          'Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable.',
+      },
+      {
+        id: 'energy',
+        percentScore: `${item[1]}% `,
+        details: `Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy.`,
+      },
+      {
+        id: 'instrumentalness',
+        percentScore: `${item[1]}% `,
+        details: `Predicts whether a track contains no vocals. "Ooh" and "aah" sounds are treated as instrumental in this context. Rap or spoken word tracks are clearly "vocal". The closer the instrumentalness value is to 1.0, the greater likelihood the track contains no vocal content. Values above 0.5 are intended to represent instrumental tracks, but confidence is higher as the value approaches 1.0.`,
+      },
+      {
+        id: 'liveness',
+        percentScore: `${item[1]}% `,
+        details: `Detects the presence of an audience in the recording. Higher liveness values represent an increased probability that the track was performed live. A value above 0.8 provides strong likelihood that the track is live.`,
+      },
+      {
+        id: 'speechiness',
+        percentScore: `${item[1]}% `,
+        details: `Speechiness detects the presence of spoken words in a track. The more exclusively speech-like the recording (e.g. talk show, audio book, poetry), the closer to 1.0 the attribute value. Values above 0.66 describe tracks that are probably made entirely of spoken words. Values between 0.33 and 0.66 describe tracks that may contain both music and speech, either in sections or layered, including such cases as rap music. Values below 0.33 most likely represent music and other non-speech-like tracks.`,
+      },
+      {
+        id: 'valence',
+        percentScore: `${item[1]}% `,
+        details: `A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry)`,
+      },
+    ];
+
     console.log('ITEM', item);
-    // setButtonClick(true);
-    // return `${item} HELLO HELLOOOO`;
+    displayPercentData.map(value => {
+      if (item[0] === value.id) {
+        setShowData(value);
+      }
+    });
   };
 
   return (
@@ -148,32 +192,40 @@ function Track() {
                   margin: '10px',
                 }}
               >
-                <ListGroup as="ul">
-                  <ListGroup.Item
-                    // active
-                    as="li"
-                    onClick={() => {
-                      displaySongInformation(item);
-                      setButtonClick(!buttonClick);
-                    }}
-                    style={{
-                      backgroundColor: buttonClick
-                        ? Colors.spotifyGreen
-                        : Colors.lightGrey,
-                      fontSize: '1.5em',
-                      color: buttonClick ? Colors.white : Colors.spotifyGreen,
-                      display: 'flex',
-                      justifyContent: 'center',
-                      border: `1px solid ${Colors.spotifyGreen}`,
-                    }}
-                  >
-                    {item[0]}
-                    <span style={{ marginLeft: '10px' }}>{`${item[1]}%`}</span>
-                  </ListGroup.Item>
+                <ListGroup>
+                  <DisplayButton
+                    label={`${item[0]}`}
+                    primary={false}
+                    onClick={() => displaySongInformation(item)}
+                  />
                 </ListGroup>
               </Col>
             ))}
           </Row>
+        </>
+      )}
+      {showData && (
+        <>
+          <Alert
+            style={{
+              border: `1px solid ${Colors.spotifyGreen}`,
+              color: Colors.white,
+              backgroundColor: 'transparent',
+              borderRadius: '15px',
+              marginTop: '20px',
+            }}
+          >
+            <Alert.Heading>{`${showData.id} ${showData.percentScore}`}</Alert.Heading>
+            <hr />
+            <p>{showData.details}</p>
+            <div className="d-flex justify-content-end">
+              <DisplayButton
+                primary={false}
+                label={'Close'}
+                onClick={() => setShowData(!showData)}
+              />
+            </div>
+          </Alert>
         </>
       )}
     </Container>
