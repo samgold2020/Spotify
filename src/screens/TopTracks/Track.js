@@ -5,9 +5,11 @@ import { useLocation } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 import { Colors } from '../../colors';
 import SpinLoader from '../../components/SpinLoader';
+import styles from './styles';
 
 function Track() {
   const [trackData, setTrackData] = useState('');
@@ -15,6 +17,7 @@ function Track() {
   const [isLoading, setIsLoading] = useState(true);
   const [keySignature, setKeySignature] = useState();
   const [mode, setMode] = useState();
+  const [buttonClick, setButtonClick] = useState(false);
 
   const location = useLocation();
   console.log('location', location);
@@ -107,122 +110,73 @@ function Track() {
 
   const displaySongInformation = item => {
     console.log('ITEM', item);
-    return `${item} HELLO HELLOOOO`;
+    // setButtonClick(true);
+    // return `${item} HELLO HELLOOOO`;
   };
 
   return (
-    <div
-      style={{
-        backgroundColor: Colors.darkGrey,
-        minHeight: '100vh',
-      }}
-    >
-      <Container fluid>
-        {isLoading ? (
-          <SpinLoader />
-        ) : (
-          <>
-            <Row>
-              <Col
-                style={{
-                  paddingTop: '2rem',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  color: Colors.spotifyGreen,
-                }}
-              >
-                <img
-                  style={{
-                    borderRadius: '15px',
-                    maxHeight: '350px',
-                  }}
-                  src={location.state.art}
-                  alt={`${location.state.title} by ${location.state.artist}`}
-                />
-                <h1
-                  style={{
-                    color: Colors.spotifyGreen,
-                    fontSize: '3rem',
-                    fontWeight: 700,
-                    textAlign: 'center',
-                    margin: '15px',
-                  }}
-                >
-                  {`${location.state.title} - ${location.state.artist}`}
-                </h1>
-                <div
-                  style={{
-                    display: 'flex',
-                    width: '25%',
-                    justifyContent: 'space-evenly',
-                    fontSize: '1em',
-                    color: Colors.white,
-                  }}
-                >
-                  <p>{`Key: ${keySignature} ${mode}`}</p>
-                  <p>{`Duration: ${millisToMinutesAndSeconds(
-                    trackData.duration_ms,
-                  )}`}</p>
-                  <p> {`Tempo: ${Math.round(trackData.tempo)} BPM`}</p>
-                </div>
-              </Col>
-            </Row>
+    <Container fluid style={styles.container}>
+      {isLoading ? (
+        <SpinLoader />
+      ) : (
+        <>
+          <Row>
+            <Col style={styles.centerImage}>
+              <img
+                style={styles.image}
+                src={location.state.art}
+                alt={`${location.state.title} by ${location.state.artist}`}
+              />
+              <h1 style={styles.h1}>
+                {`${location.state.title} - ${location.state.artist}`}
+              </h1>
+              <p style={styles.p}>{`Key: ${keySignature} ${mode}`}</p>
+              <p style={styles.p}>{`Duration: ${millisToMinutesAndSeconds(
+                trackData.duration_ms,
+              )}`}</p>
+              <p style={styles.p}>
+                {' '}
+                {`Tempo: ${Math.round(trackData.tempo)} BPM`}
+              </p>
+            </Col>
+          </Row>
 
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-around',
-                overflow: 'scroll',
-                backgroundColor: Colors.lightGrey,
-                borderRadius: '15px',
-                padding: '20px',
-              }}
-            >
-              {percentData?.map(item => (
-                <div
-                  onClick={() => {
-                    console.log('item that was clicked', item);
-                    displaySongInformation(item);
-                  }}
-                  style={{
-                    display: 'flex',
-                    border: `3px solid ${Colors.spotifyGreen}`,
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    borderRadius: '50%',
-                    minWidth: '200px',
-                    minHeight: '200px',
-                    color: Colors.spotifyGreen,
-                    backgroundColor: Colors.lightGrey,
-                    fontSize: '1.5em',
-                    justifyContent: 'center',
-                    marginLeft: '20px',
-                  }}
-                >
-                  {item[0]}
-                  <span style={{ marginLeft: '10px' }}>{`${item[1]}%`}</span>
-                </div>
-              ))}
-            </div>
-            {/* TODO Add Song Player */}
-            {displaySongInformation()}
-            <Row>
+          <Row style={{ backgroundColor: Colors.lightGrey, padding: '20px' }}>
+            {percentData?.map(item => (
               <Col
                 style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  marginTop: '2%',
-                  color: Colors.spotifyGreen,
+                  margin: '10px',
                 }}
               >
-                <h1>PLAYER COMING SOON</h1>
+                <ListGroup as="ul">
+                  <ListGroup.Item
+                    // active
+                    as="li"
+                    onClick={() => {
+                      displaySongInformation(item);
+                      setButtonClick(!buttonClick);
+                    }}
+                    style={{
+                      backgroundColor: buttonClick
+                        ? Colors.spotifyGreen
+                        : Colors.lightGrey,
+                      fontSize: '1.5em',
+                      color: buttonClick ? Colors.white : Colors.spotifyGreen,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      border: `1px solid ${Colors.spotifyGreen}`,
+                    }}
+                  >
+                    {item[0]}
+                    <span style={{ marginLeft: '10px' }}>{`${item[1]}%`}</span>
+                  </ListGroup.Item>
+                </ListGroup>
               </Col>
-            </Row>
-          </>
-        )}
-      </Container>
-    </div>
+            ))}
+          </Row>
+        </>
+      )}
+    </Container>
   );
 }
 
