@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 
 import SpinLoader from '../../components/SpinLoader';
 import Table from './TopTracksTable';
 import useAuth from '../../hooks/useAuth';
 import uniformStyles from '../../constants/uniformstyles';
+import { getTopTracks } from '../../queryHelper';
 
 function TopTracks() {
   const { token } = useAuth();
@@ -22,20 +22,10 @@ function TopTracks() {
   }, [token]);
 
   const getSongs = async token => {
-    try {
-      let res = await axios({
-        url: 'https://api.spotify.com/v1/me/top/tracks',
-        method: 'get',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.status === 200) {
-        setTopSongs(res.data);
-        setIsLoading(false);
-      }
-    } catch (e) {
-      console.log('Error', e);
+    const res = await getTopTracks(token);
+    if (res) {
+      setTopSongs(res);
+      setIsLoading(false);
     }
   };
 

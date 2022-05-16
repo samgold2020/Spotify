@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import Container from 'react-bootstrap/Container';
@@ -10,6 +9,7 @@ import DisplayButton from '../../components/Button';
 import styles from './styles';
 import useAuth from '../../hooks/useAuth';
 import uniformStyles from '../../constants/uniformstyles';
+import { getTopArtists } from '../../queryHelper';
 
 function TopArtists() {
   const { token } = useAuth();
@@ -29,23 +29,11 @@ function TopArtists() {
   }, [token]);
 
   const getArtists = async token => {
-    try {
-      let res = await axios({
-        url: 'https://api.spotify.com/v1/me/top/artists',
-        method: 'get',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.status === 200) {
-        setArtistData(res?.data.items);
-        setIsLoading(false);
-      }
-      return artistData;
-    } catch (err) {
-      console.log('Top Artists Error', err);
+    const res = await getTopArtists(token);
+    if (res) {
+      setArtistData(res);
+      setIsLoading(false);
     }
-    return artistData;
   };
 
   const handleSelect = (selectedIndex, e) => {

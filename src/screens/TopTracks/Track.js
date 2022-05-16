@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -14,6 +13,7 @@ import styles from './styles';
 import DisplayButton from '../../components/Button';
 import useAuth from '../../hooks/useAuth';
 import uniformStyles from '../../constants/uniformstyles';
+import { getTrackAudioFeatures } from '../../queryHelper';
 
 function Track() {
   const [trackData, setTrackData] = useState('');
@@ -33,28 +33,17 @@ function Track() {
   }, [token]);
 
   const viewTrack = async trackId => {
-    try {
-      let res = await axios({
-        url: `https://api.spotify.com/v1/audio-features/${trackId}`,
-        method: 'get',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.status === 200) {
-        setTrackData(res.data);
-        setIsLoading(false);
-        manipulateData(res.data);
-        readableKeySignature(res.data.key);
-        if (res?.data?.mode === 1) {
-          setMode('Major');
-        } else {
-          setMode('Minor');
-        }
+    const res = await getTrackAudioFeatures(trackId, token);
+    if (res) {
+      setTrackData(res);
+      setIsLoading(false);
+      manipulateData(res);
+      readableKeySignature(res?.key);
+      if (res?.mode === 1) {
+        setMode('Major');
+      } else {
+        setMode('Minor');
       }
-      return trackData;
-    } catch (e) {
-      console.log('Error getting the track', e);
     }
   };
 
@@ -151,7 +140,6 @@ function Track() {
       },
     ];
 
-    console.log('ITEM', item);
     displayPercentData.map(value => {
       if (item[0] === value.id) {
         setShowData(value);
