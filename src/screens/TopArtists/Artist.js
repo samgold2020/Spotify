@@ -7,8 +7,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import SpinLoader from '../../components/SpinLoader/index';
-import styles from './styles';
+import uniformStyles from '../../constants/uniformstyles';
 import useWicki from '../../hooks/UseWicki';
+import useAuth from '../../hooks/useAuth';
 
 const Artist = () => {
   const [artistData, setArtistData] = useState();
@@ -17,14 +18,13 @@ const Artist = () => {
 
   const artistName = location.state.name;
   const { wickiContent, isLoading } = useWicki(artistName);
+  const { token } = useAuth();
 
   useEffect(() => {
     viewArtist(location.state.detail);
-  }, []);
+  }, [token]);
 
   const viewArtist = async artistId => {
-    const token = localStorage.getItem('Access_Token');
-
     try {
       let res = await axios({
         url: `https://api.spotify.com/v1/artists/${artistId}`,
@@ -36,7 +36,6 @@ const Artist = () => {
       if (res.status === 200) {
         setArtistData(res?.data);
       }
-      // return artistData;
     } catch (e) {
       console.log('Error', e);
     }
@@ -48,36 +47,39 @@ const Artist = () => {
   };
 
   return (
-    <div style={styles.pageBackground}>
-      <Container fluid>
-        {isLoading ? (
-          <SpinLoader />
-        ) : (
-          <>
-            <Row>
-              <Col>
-                <div style={{ ...styles.centerContent, ...styles.padding }}>
-                  <img
-                    src={artistData?.images[1].url}
-                    style={styles.image}
-                    alt={`${artistData?.name} profile art`}
-                  />
-                </div>
-              </Col>
-              <h1 style={styles.h1}>{artistData?.name}</h1>
-              <p style={styles.p}>{displayGenre()}</p>
-              <p
-                style={styles.p}
-              >{`Followers: ${artistData?.followers.total}`}</p>
-            </Row>
+    <Container fluid style={uniformStyles.pageBackground}>
+      {isLoading ? (
+        <SpinLoader />
+      ) : (
+        <>
+          <Row>
+            <Col>
+              <div
+                style={{
+                  ...uniformStyles.centerContent,
+                  ...uniformStyles.padding,
+                }}
+              >
+                <img
+                  src={artistData?.images[1].url}
+                  style={uniformStyles.image}
+                  alt={`${artistData?.name} profile art`}
+                />
+              </div>
+            </Col>
+            <h1 style={uniformStyles.h1}>{artistData?.name}</h1>
+            <p style={uniformStyles.p}>{displayGenre()}</p>
+            <p
+              style={uniformStyles.p}
+            >{`Followers: ${artistData?.followers.total}`}</p>
+          </Row>
 
-            <Row style={styles.padding}>
-              <Col style={styles.paragraphBorder}>{wickiContent}</Col>
-            </Row>
-          </>
-        )}
-      </Container>
-    </div>
+          <Row style={uniformStyles.padding}>
+            <Col style={uniformStyles.paragraphBorder}>{wickiContent}</Col>
+          </Row>
+        </>
+      )}
+    </Container>
   );
 };
 

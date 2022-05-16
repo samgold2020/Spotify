@@ -3,13 +3,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
+import Container from 'react-bootstrap/Container';
 
 import SpinLoader from '../../components/SpinLoader/index';
 import DisplayButton from '../../components/Button';
 import styles from './styles';
+import useAuth from '../../hooks/useAuth';
+import uniformStyles from '../../constants/uniformstyles';
 
 function TopArtists() {
-  const token = localStorage.getItem('Access_Token');
+  const { token } = useAuth();
+
   const [artistData, setArtistData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [index, setIndex] = useState(0);
@@ -20,7 +24,7 @@ function TopArtists() {
     if (token) {
       getArtists(token);
     } else {
-      console.log('There is no token');
+      console.log('No Token Top Artists');
     }
   }, [token]);
 
@@ -60,7 +64,7 @@ function TopArtists() {
   }
 
   return (
-    <div style={styles.pageBackground}>
+    <Container fluid style={uniformStyles.pageBackground}>
       {isLoading ? (
         <SpinLoader />
       ) : (
@@ -68,13 +72,13 @@ function TopArtists() {
           <Carousel activeIndex={index} onSelect={handleSelect}>
             {artistData?.map((item, index) => (
               <Carousel.Item>
-                <h1 key={index} style={styles.h1}>
+                <h1 key={index} style={uniformStyles.h1}>
                   <span>{`${index + 1}.`} </span> {item.name}
                 </h1>
                 <div
                   style={{
-                    ...styles.centerContent,
-                    ...styles.lightBackground,
+                    ...uniformStyles.centerContent,
+                    ...uniformStyles.lightBackground,
                   }}
                 >
                   <img
@@ -85,7 +89,7 @@ function TopArtists() {
                   />
                 </div>
                 <Carousel.Caption>
-                  <div style={styles.centerContent}>
+                  <div style={uniformStyles.centerContent}>
                     <DisplayButton
                       label={'Artist Details'}
                       primary={false}
@@ -109,7 +113,7 @@ function TopArtists() {
           </Carousel>
         </>
       )}
-    </div>
+    </Container>
   );
 }
 

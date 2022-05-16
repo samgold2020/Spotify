@@ -12,6 +12,8 @@ import { Colors } from '../../colors';
 import SpinLoader from '../../components/SpinLoader';
 import styles from './styles';
 import DisplayButton from '../../components/Button';
+import useAuth from '../../hooks/useAuth';
+import uniformStyles from '../../constants/uniformstyles';
 
 function Track() {
   const [trackData, setTrackData] = useState('');
@@ -23,15 +25,14 @@ function Track() {
   const [showData, setShowData] = useState('');
 
   const location = useLocation();
-  console.log('location', location);
+
+  const { token } = useAuth();
 
   useEffect(() => {
     viewTrack(location.state.detail);
-  }, []);
+  }, [token]);
 
   const viewTrack = async trackId => {
-    const token = localStorage.getItem('Access_Token');
-
     try {
       let res = await axios({
         url: `https://api.spotify.com/v1/audio-features/${trackId}`,
@@ -159,7 +160,7 @@ function Track() {
   };
 
   return (
-    <Container fluid style={styles.container}>
+    <Container fluid style={uniformStyles.pageBackground}>
       {isLoading ? (
         <SpinLoader />
       ) : (
@@ -167,18 +168,20 @@ function Track() {
           <Row>
             <Col style={styles.centerImage}>
               <img
-                style={styles.image}
+                style={uniformStyles.image}
                 src={location.state.art}
                 alt={`${location.state.title} by ${location.state.artist}`}
               />
-              <h1 style={styles.h1}>
+              <h1 style={uniformStyles.h1}>
                 {`${location.state.title} - ${location.state.artist}`}
               </h1>
-              <p style={styles.p}>{`Key: ${keySignature} ${mode}`}</p>
-              <p style={styles.p}>{`Duration: ${millisToMinutesAndSeconds(
+              <p style={uniformStyles.p}>{`Key: ${keySignature} ${mode}`}</p>
+              <p
+                style={uniformStyles.p}
+              >{`Duration: ${millisToMinutesAndSeconds(
                 trackData.duration_ms,
               )}`}</p>
-              <p style={styles.p}>
+              <p style={uniformStyles.p}>
                 {' '}
                 {`Tempo: ${Math.round(trackData.tempo)} BPM`}
               </p>
@@ -206,15 +209,7 @@ function Track() {
       )}
       {showData && (
         <>
-          <Alert
-            style={{
-              border: `1px solid ${Colors.spotifyGreen}`,
-              color: Colors.white,
-              backgroundColor: 'transparent',
-              borderRadius: '15px',
-              marginTop: '20px',
-            }}
-          >
+          <Alert style={styles.alertData}>
             <Alert.Heading>{`${showData.id} ${showData.percentScore}`}</Alert.Heading>
             <hr />
             <p>{showData.details}</p>
