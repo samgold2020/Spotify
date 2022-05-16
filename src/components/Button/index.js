@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 
 import styles from './styles';
 
-const DisplayButton = ({ label, onClick, primary = true, style }) => {
+const DisplayButton = ({ label, onClick, primary = true }) => {
   const [hoverPrimary, setHoverPrimary] = useState(false);
   const [hoverSecondary, setHoverSecondary] = useState(false);
 
