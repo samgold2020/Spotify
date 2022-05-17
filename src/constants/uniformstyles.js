@@ -11,8 +11,6 @@ const styles = {
   },
   h1: {
     color: Colors.spotifyGreen,
-    fontSize: '3rem',
-    fontWeight: 700,
     textAlign: 'center',
     margin: '15px',
   },
