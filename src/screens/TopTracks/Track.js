@@ -21,7 +21,6 @@ function Track() {
   const [isLoading, setIsLoading] = useState(true);
   const [keySignature, setKeySignature] = useState('');
   const [mode, setMode] = useState('');
-
   const [showData, setShowData] = useState('');
 
   const location = useLocation();
@@ -176,7 +175,12 @@ function Track() {
             </Col>
           </Row>
 
-          <Row style={{ backgroundColor: Colors.lightGrey, padding: '20px' }}>
+          <Row
+            style={{
+              backgroundColor: Colors.lightGrey,
+              padding: '20px',
+            }}
+          >
             {percentData?.map(item => (
               <Col
                 style={{
@@ -196,7 +200,7 @@ function Track() {
         </>
       )}
       {showData && (
-        <>
+        <div style={uniformStyles.centerContent}>
           <Alert style={styles.alertData}>
             <Alert.Heading>{`${showData.id} ${showData.percentScore}`}</Alert.Heading>
             <hr />
@@ -209,7 +213,7 @@ function Track() {
               />
             </div>
           </Alert>
-        </>
+        </div>
       )}
     </Container>
   );

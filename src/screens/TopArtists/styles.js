@@ -1,5 +1,3 @@
-import { Colors } from '../../colors';
-
 const styles = {
   carouselImage: {
     borderRadius: '15px',
