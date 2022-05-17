@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import { Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,6 +11,7 @@ import NavBar from './components/NavBar';
 import Artist from './screens/TopArtists/Artist';
 import Track from './screens/TopTracks/Track';
 import Footer from './components/Footer';
+import ListeningHistory from './screens/ListeningHistory/ListeningHistory';
 import { Colors } from './colors';
 import useAuth from './hooks/useAuth';
 
@@ -28,6 +29,10 @@ function App() {
             <Route path={RouteNav.TopTracks} component={TopTracks} />
             <Route path={RouteNav.Artist} component={Artist} />
             <Route path={RouteNav.Track} component={Track} />
+            <Route
+              path={RouteNav.ListeningHistory}
+              component={ListeningHistory}
+            />
             <Footer />
           </div>
         )}
