@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -9,16 +8,38 @@ import styles from './styles';
 import UserDropdown from '../DropdownMenu';
 import SpinLoader from '../SpinLoader';
 import SpotifyLogo from './SpotifyLogo.png';
+import { getCurrentUserData } from '../../queryHelper';
+import useAuth from '../../hooks/useAuth';
 
 function NavBar() {
-  const token = localStorage.getItem('Access_Token');
+  const { token } = useAuth();
   const [userData, setUserData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [isActiveRoute, setIsActiveRoute] = useState('');
+  const [navOptions, setNavOptions] = useState([
+    {
+      pageTitle: 'Top Artists',
+      href: '/topartists',
+      isActiveRoute: false,
+    },
+    {
+      pageTitle: 'Top Tracks',
+      href: '/toptracks',
+      isActiveRoute: false,
+    },
+    {
+      pageTitle: 'History Upload',
+      href: '/listeninghistory',
+      isActiveRoute: false,
+    },
+  ]);
 
-  /*signOut function clears local storage and redirects the user to the login page*/
+  /*
+    signOut function clears local storage
+    and redirects the user to the login page
+  */
   function signOut() {
     localStorage.clear();
-    console.log(' logged out successfully' + window.status);
     window.location.href = 'http://localhost:3000/login';
   }
 
@@ -28,32 +49,34 @@ function NavBar() {
     } else {
       console.log('There is no token');
     }
-  }, [token]);
+  }, [token, isActiveRoute]);
 
-  async function getUserData(token) {
-    try {
-      let res = await axios({
-        url: 'https://api.spotify.com/v1/me',
-        method: 'get',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.status === 200) {
-        setUserData(res?.data);
-        setIsLoading(false);
-      }
-      return userData;
-    } catch (err) {
-      signOut();
+  const getUserData = async token => {
+    const res = await getCurrentUserData(token);
+    if (res) {
+      setUserData(res);
+      setIsLoading(false);
     }
-    return userData;
-  }
+  };
 
+  /*
+  TODO:
+    Find the index of the array object whose 
+    isActiveRoute attribute needs to be flipped
+  */
+  // const handleClick = (currentPage, index) => {
+  //   setNavOptions(
+  //     navOptions.map(nav =>
+  //       nav.pageTitle === currentPage ? { ...nav, isActiveRoute: true } : nav,
+  //     ),
+  //   );
+  // };
+
+  console.log('Nav Options', navOptions);
   return (
     <Navbar style={styles.navbar} expand="lg">
       <Container fluid>
-        <Navbar.Brand style={styles.navbarTitle} href="/topartists">
+        <Navbar.Brand href="/topartists">
           <img
             style={{ width: '65px', height: '65px', marginLeft: '10px' }}
             src={SpotifyLogo}
@@ -70,12 +93,21 @@ function NavBar() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link style={styles.navbarLinks} href="/topartists">
-              Top Artists
-            </Nav.Link>
-            <Nav.Link style={styles.navbarLinks} href="/toptracks">
-              Top Tracks
-            </Nav.Link>
+            {navOptions.map((item, index) => (
+              <Nav.Link
+                key={index}
+                style={styles.navbarLinks}
+                href={item.href}
+                // onClick={
+                //   e => {
+                //     e.preventDefault();
+                //     handleClick(item.pageTitle, index);
+                //   }
+                // }
+              >
+                {item.pageTitle}
+              </Nav.Link>
+            ))}
           </Nav>
           {isLoading ? (
             <SpinLoader />
@@ -84,7 +116,7 @@ function NavBar() {
               email={userData?.email}
               name={userData?.display_name}
               src={userData?.images[0].url}
-              followers={userData?.followers.total}
+              followers={userData?.followers?.total}
               signout={'Logout'}
               onClick={signOut}
             />
