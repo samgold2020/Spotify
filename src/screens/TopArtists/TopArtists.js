@@ -79,7 +79,7 @@ function TopArtists() {
                 <Carousel.Caption>
                   <div style={uniformStyles.centerContent}>
                     <DisplayButton
-                      label={'Artist Details'}
+                      label={'Details'}
                       primary={false}
                       onClick={() => {
                         handleSubmit(item);
@@ -87,7 +87,7 @@ function TopArtists() {
                     />
                     <div style={{ marginLeft: '10px' }}>
                       <DisplayButton
-                        label={'Open in Spotify'}
+                        label={'Spotify'}
                         primary={false}
                         onClick={() => {
                           openSpotify(item.external_urls.spotify);

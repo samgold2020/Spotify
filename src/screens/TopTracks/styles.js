@@ -14,6 +14,7 @@ const styles = {
     backgroundColor: 'transparent',
     borderRadius: '15px',
     marginTop: '20px',
+    maxWidth: '75%',
   },
 };
 
