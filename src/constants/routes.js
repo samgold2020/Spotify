@@ -4,4 +4,5 @@ export default {
   TopTracks: '/toptracks',
   Artist: `/viewartist`,
   Track: '/viewtrack',
+  ListeningHistory: '/listeninghistory',
 };
