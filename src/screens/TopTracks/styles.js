@@ -15,6 +15,7 @@ const styles = {
     borderRadius: '15px',
     marginTop: '20px',
     maxWidth: '75%',
+    fontSize: '1.2em',
   },
 };
 

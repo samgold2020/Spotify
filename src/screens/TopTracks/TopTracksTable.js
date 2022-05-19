@@ -24,7 +24,13 @@ const ArtistTable = ({ data }) => {
   return (
     <Table striped hover responsive="sm" variant="dark" bordered={false}>
       <thead>
-        <tr style={{ color: Colors.white }}>
+        <tr
+          style={{
+            color: Colors.white,
+            fontFamily: 'Montserrat',
+            fontWeight: '700',
+          }}
+        >
           <th></th>
           <th></th>
           <th>Artist</th>
@@ -33,7 +39,7 @@ const ArtistTable = ({ data }) => {
           <th>Navigation</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody style={{ fontFamily: 'Montserrat', fontWeight: '700' }}>
         {data?.items.map((song, index) => (
           <tr style={{ color: Colors.white }}>
             <td>{index + 1}</td>

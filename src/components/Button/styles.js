@@ -7,6 +7,8 @@ const styles = {
     color: hoverPrimary ? Colors.spotifyGreen : Colors.lightGrey,
     fontSize: '1.2em',
     boxShadow: 'none',
+    fontFamily: 'Montserrat',
+    fontWeight: '700',
   }),
   buttonSecondary: hoverSecondary => ({
     backgroundColor: hoverSecondary ? Colors.spotifyGreen : Colors.lightGrey,
@@ -14,6 +16,8 @@ const styles = {
     color: hoverSecondary ? Colors.lightGrey : Colors.spotifyGreen,
     fontSize: '1.2em',
     boxShadow: 'none',
+    fontFamily: 'Montserrat',
+    fontWeight: '700',
   }),
 };
 

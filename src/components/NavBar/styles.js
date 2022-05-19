@@ -6,6 +6,7 @@ const styles = {
   },
   navbarLinks: {
     color: Colors.white,
+    fontFamily: 'Montserrat',
     fontWeight: '700',
   },
 };

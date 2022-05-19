@@ -153,12 +153,19 @@ function Track() {
       ) : (
         <>
           <Row>
-            <Col style={styles.centerImage}>
-              <img
-                style={uniformStyles.image}
-                src={location.state.art}
-                alt={`${location.state.title} by ${location.state.artist}`}
-              />
+            <Col>
+              <div
+                style={{
+                  ...uniformStyles.centerContent,
+                  ...uniformStyles.padding,
+                }}
+              >
+                <img
+                  style={uniformStyles.image}
+                  src={location.state.art}
+                  alt={`${location.state.title} by ${location.state.artist}`}
+                />
+              </div>
               <h1 style={uniformStyles.h1}>
                 {`${location.state.title} - ${location.state.artist}`}
               </h1>

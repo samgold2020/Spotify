@@ -63,7 +63,11 @@ const Artist = () => {
           </Row>
 
           <Row style={uniformStyles.padding}>
-            <Col style={uniformStyles.paragraphBorder}>{wickiContent}</Col>
+            <Col
+              style={{ ...uniformStyles.paragraphBorder, ...uniformStyles.p }}
+            >
+              {wickiContent}
+            </Col>
           </Row>
         </>
       )}

@@ -16,7 +16,9 @@ const UserDropdown = ({
   followers,
   ...rest
 }) => (
-  <Dropdown style={style}>
+  <Dropdown
+    style={{ fontFamily: 'Montserrat', fontWeight: '700', fontSize: '1.2em' }}
+  >
     <DropdownToggle
       variant="outline-secondary"
       className="btn-transparent avatar-toggle"

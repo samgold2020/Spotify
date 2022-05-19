@@ -5,6 +5,7 @@ import 'animate.css';
 
 import { Colors } from '../../colors';
 import DisplayButton from '../../components/Button/index';
+import uniformStyles from '../../constants/uniformstyles';
 
 export default function Login() {
   const CLIENT_ID = '7e36f2d84e53488fb922004cd1a7456a';
@@ -20,14 +21,11 @@ export default function Login() {
 
   return (
     <div style={{ backgroundColor: Colors.darkGrey, minHeight: '100vh' }}>
-      <Container fluid>
+      <Container fluid style={uniformStyles.centerContent}>
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column',
-            paddingTop: '25%',
             textAlign: 'center',
+            paddingTop: '25%',
           }}
         >
           <h1
@@ -38,9 +36,11 @@ export default function Login() {
           </h1>
           <h2
             style={{
-              fontSize: '2rem',
+              fontSize: '1.2em',
               color: Colors.spotifyGreen,
               marginBottom: '2%',
+              fontFamily: 'Montserrat',
+              fontWeight: '700',
             }}
           >
             Explore your favorite songs and artists
