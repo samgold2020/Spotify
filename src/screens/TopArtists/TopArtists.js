@@ -41,9 +41,16 @@ function TopArtists() {
   };
 
   const handleSubmit = artist => {
+    console.log('Artist', artist);
     history.push({
       pathname: '/viewartist',
-      state: { detail: artist.id, name: artist.name },
+      state: {
+        detail: artist.id,
+        name: artist.name,
+        followers: artist.followers.total,
+        genre: artist.genres,
+        image: artist.images[0].url,
+      },
     });
   };
 

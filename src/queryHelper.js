@@ -2,25 +2,25 @@ import axios from 'axios';
 
 const endpoint = process.env.REACT_APP_BASEURL;
 
-//TODO check for token before calls?
-export const getArtistByName = async (artistId, token) => {
-  if (token) {
-    try {
-      let res = await axios({
-        url: `${endpoint}artists/${artistId}`,
-        method: 'get',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.status === 200) {
-        return res?.data;
-      }
-    } catch (e) {
-      console.log('Error', e);
-    }
-  }
-};
+/* Not currently in use but saved for later use */
+// export const getArtistByName = async (artistId, token) => {
+//   if (token) {
+//     try {
+//       let res = await axios({
+//         url: `${endpoint}artists/${artistId}`,
+//         method: 'get',
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       });
+//       if (res.status === 200) {
+//         return res?.data;
+//       }
+//     } catch (e) {
+//       console.log('Error', e);
+//     }
+//   }
+// };
 
 export const getTopArtists = async token => {
   if (token) {

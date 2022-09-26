@@ -22,20 +22,25 @@ function App() {
     <React.Fragment>
       <Switch>
         <Route path={RouteNav.Login} component={Login} />
-        {isAuth && (
-          <div style={{ backgroundColor: Colors.darkGrey }}>
-            <NavBar />
-            <Route path={RouteNav.TopArtists} component={TopArtists} />
-            <Route path={RouteNav.TopTracks} component={TopTracks} />
-            <Route path={RouteNav.Artist} component={Artist} />
-            <Route path={RouteNav.Track} component={Track} />
-            <Route
-              path={RouteNav.ListeningHistory}
-              component={ListeningHistory}
-            />
-            <Footer />
-          </div>
-        )}
+        {
+          isAuth && (
+            <div style={{ backgroundColor: Colors.darkGrey }}>
+              <NavBar />
+              <Route path={RouteNav.TopArtists} component={TopArtists} />
+              <Route path={RouteNav.TopTracks} component={TopTracks} />
+              <Route path={RouteNav.Artist} component={Artist} />
+              <Route path={RouteNav.Track} component={Track} />
+              <Route
+                path={RouteNav.ListeningHistory}
+                component={ListeningHistory}
+              />
+              <Footer />
+            </div>
+          )
+          // : (
+          //   <>//Return Unprotected Route//</>
+          // )
+        }
       </Switch>
     </React.Fragment>
   );
